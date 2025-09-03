@@ -53,7 +53,7 @@ export async function GET() {
           { id: 2, mealType: 'LUNCH', totalOrders: 177, isActive: true },
           { id: 3, mealType: 'SNACK', totalOrders: 89, isActive: true }
         ],
-        date: today,
+        date: getTodayDate(),
         lastUpdated: new Date().toISOString()
       }
     })

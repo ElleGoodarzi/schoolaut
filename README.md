@@ -47,7 +47,7 @@
 - **فونت‌های فارسی** - وزیر و ایران‌سنس
 
 ### Backend & Database
-- **PostgreSQL** - پایگاه داده رابطه‌ای
+- **SQLite** - پایگاه داده محلی (قابل تغییر به PostgreSQL)
 - **Prisma ORM** - مدیریت پایگاه داده
 - **Next.js API Routes** - رابط برنامه‌نویسی
 - **TypeScript** - تایپ‌سیفتی کامل
@@ -81,8 +81,8 @@ npm install
 
 3. **راه‌اندازی پایگاه داده**
 \`\`\`bash
-# راه‌اندازی PostgreSQL (مطابق راهنمای DATABASE_SETUP.md)
-# ایجاد فایل .env با اطلاعات پایگاه داده
+# فایل .env.local از قبل تنظیم شده است (SQLite)
+# برای استفاده از PostgreSQL، راهنمای DATABASE_SETUP.md را ببینید
 
 # تولید کلاینت Prisma
 npm run db:generate

@@ -57,7 +57,7 @@ export async function GET() {
             totalOrders: 177
           }
         ],
-        date: today,
+        date: getTodayDate(),
         lastUpdated: new Date().toISOString()
       }
     })

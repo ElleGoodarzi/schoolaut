@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import MainLayout from '@/components/MainLayout'
 import { 
   PlusIcon,
@@ -11,34 +11,66 @@ import {
   UserGroupIcon,
   ClockIcon
 } from '@heroicons/react/24/outline'
+import { englishToPersianNumbers } from '@/lib/utils'
 
-// Mock data
-const mockSchoolYears = [
-  { id: 1, name: '۱۴۰۳-۱۴۰۴', startDate: '۱۴۰۳/۰۶/۳۱', endDate: '۱۴۰۴/۰۶/۳۰', isActive: true },
-  { id: 2, name: '۱۴۰۲-۱۴۰۳', startDate: '۱۴۰۲/۰۶/۳۱', endDate: '۱۴۰۳/۰۶/۳۰', isActive: false },
-]
-
-const mockClassLevels = [
-  { id: 1, grade: 'اول', sections: ['الف', 'ب'], teacherId: 1, teacherName: 'خانم احمدی', studentCount: 25 },
-  { id: 2, grade: 'دوم', sections: ['الف', 'ب', 'ج'], teacherId: 2, teacherName: 'خانم محمدی', studentCount: 28 },
-  { id: 3, grade: 'سوم', sections: ['الف', 'ب'], teacherId: 3, teacherName: 'آقای رضایی', studentCount: 22 },
-  { id: 4, grade: 'چهارم', sections: ['الف', 'ب'], teacherId: 4, teacherName: 'خانم کریمی', studentCount: 24 },
-]
-
-const mockCalendarEvents = [
-  { id: 1, title: 'شروع سال تحصیلی', date: '۱۴۰۳/۰۶/۳۱', type: 'academic' },
-  { id: 2, title: 'امتحانات میان‌ترم اول', date: '۱۴۰۳/۰۸/۱۵', type: 'exam' },
-  { id: 3, title: 'تعطیلات زمستانی', date: '۱۴۰۳/۱۰/۲۰', type: 'holiday' },
-  { id: 4, title: 'امتحانات نهایی', date: '۱۴۰۴/۰۳/۱۵', type: 'exam' },
-]
+interface Class {
+  id: number
+  grade: number
+  section: string
+  teacher: {
+    firstName: string
+    lastName: string
+    employeeId: string
+  }
+  _count: {
+    students: number
+  }
+}
 
 export default function ManagementPanel() {
-  const [activeTab, setActiveTab] = useState('school-years')
+  const [activeTab, setActiveTab] = useState('classes')
+  const [classes, setClasses] = useState<Class[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (activeTab === 'classes') {
+      fetchClasses()
+    }
+  }, [activeTab])
+
+  const fetchClasses = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/management/classes')
+      const result = await response.json()
+      
+      if (result.success && result.data.classes) {
+        setClasses(result.data.classes)
+      }
+    } catch (error) {
+      console.error('Error fetching classes:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Mock data for other sections (to be implemented later)
+  const mockSchoolYears = [
+    { id: 1, name: '۱۴۰۳-۱۴۰۴', startDate: '۱۴۰۳/۰۶/۳۱', endDate: '۱۴۰۴/۰۶/۳۰', isActive: true },
+    { id: 2, name: '۱۴۰۲-۱۴۰۳', startDate: '۱۴۰۲/۰۶/۳۱', endDate: '۱۴۰۳/۰۶/۳۰', isActive: false },
+  ]
+
+  const mockCalendarEvents = [
+    { id: 1, title: 'شروع سال تحصیلی', date: '۱۴۰۳/۰۶/۳۱', type: 'academic' },
+    { id: 2, title: 'امتحانات میان‌ترم اول', date: '۱۴۰۳/۰۸/۱۵', type: 'exam' },
+    { id: 3, title: 'تعطیلات زمستانی', date: '۱۴۰۳/۱۰/۲۰', type: 'holiday' },
+    { id: 4, title: 'امتحانات نهایی', date: '۱۴۰۴/۰۳/۱۵', type: 'exam' },
+  ]
   const [showAddModal, setShowAddModal] = useState(false)
 
   const tabs = [
+    { id: 'classes', name: 'کلاس‌ها و معلمان', icon: AcademicCapIcon },
     { id: 'school-years', name: 'سال تحصیلی', icon: CalendarIcon },
-    { id: 'class-levels', name: 'پایه‌ها و کلاس‌ها', icon: AcademicCapIcon },
     { id: 'calendar', name: 'تقویم مدرسه', icon: ClockIcon },
     { id: 'permissions', name: 'دسترسی‌ها', icon: UserGroupIcon },
   ]

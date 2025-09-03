@@ -58,7 +58,7 @@ export async function GET() {
         totalMarked: 189,
         totalStudents: 186,
         attendanceRate: 95,
-        date: today,
+        date: getTodayDate(),
         lastUpdated: new Date().toISOString()
       }
     })

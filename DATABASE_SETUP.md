@@ -1,6 +1,25 @@
 # راه‌اندازی پایگاه داده
 
-## نصب PostgreSQL
+## گزینه 1: SQLite (پیش‌فرض - آسان)
+
+SQLite برای توسعه محلی پیش‌فرض است و نیازی به نصب ندارد.
+
+### تنظیمات
+فایل `.env.local` از قبل تنظیم شده:
+```bash
+DATABASE_URL="file:./prisma/dev.db"
+```
+
+### راه‌اندازی
+```bash
+npm run db:generate  # تولید کلاینت Prisma
+npm run db:push      # ایجاد جداول
+npm run db:seed      # پر کردن با داده‌های نمونه
+```
+
+---
+
+## گزینه 2: PostgreSQL (برای پروداکشن)
 
 ### macOS (با Homebrew)
 ```bash
@@ -41,15 +60,35 @@ GRANT ALL PRIVILEGES ON DATABASE schoolaut_db TO schoolaut_user;
 
 ## تنظیم متغیرهای محیطی
 
-فایل `.env` را در ریشه پروژه ایجاد کنید:
+فایل `.env.local` را برای PostgreSQL تغییر دهید:
 
 ```bash
-# Database
+# Database (PostgreSQL)
 DATABASE_URL="postgresql://schoolaut_user:your_password@localhost:5432/schoolaut_db?schema=public"
 
 # Next.js
 NEXTAUTH_SECRET="your-secret-key-here"
 NEXTAUTH_URL="http://localhost:3000"
+```
+
+## تغییر از SQLite به PostgreSQL
+
+1. **تغییر provider در schema.prisma:**
+```prisma
+datasource db {
+  provider = "postgresql"  // تغییر از "sqlite"
+  url      = env("DATABASE_URL")
+}
+```
+
+2. **نصب وابستگی PostgreSQL:**
+```bash
+npm install pg @types/pg
+```
+
+3. **تولید مجدد کلاینت:**
+```bash
+npm run db:generate
 ```
 
 ## راه‌اندازی Prisma
