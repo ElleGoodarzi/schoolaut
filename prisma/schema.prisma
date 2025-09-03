@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id            Int      @id @default(autoincrement())
+  studentId     String   @unique // شماره دانش‌آموزی
+  firstName     String
+  lastName      String
+  fatherName    String
+  nationalId    String   @unique
+  birthDate     DateTime
+  grade         Int      // پایه تحصیلی (1-6)
+  section       String   // شعبه (الف، ب، ج)
+  classId       Int
+  enrollmentDate DateTime @default(now())
+  isActive      Boolean  @default(true)
+  
+  // Relations
+  class         Class    @relation(fields: [classId], references: [id])
+  attendances   Attendance[]
+  payments      Payment[]
+  
+  @@map("students")
+}
+
+model Teacher {
+  id            Int      @id @default(autoincrement())
+  employeeId    String   @unique
+  firstName     String
+  lastName      String
+  nationalId    String   @unique
+  phone         String
+  email         String?
+  hireDate      DateTime
+  isActive      Boolean  @default(true)
+  
+  // Relations
+  classes       Class[]
+  
+  @@map("teachers")
+}
+
+model Class {
+  id            Int      @id @default(autoincrement())
+  grade         Int      // پایه (1-6)
+  section       String   // شعبه (الف، ب، ج)
+  teacherId     Int
+  capacity      Int      @default(30)
+  isActive      Boolean  @default(true)
+  
+  // Relations
+  teacher       Teacher  @relation(fields: [teacherId], references: [id])
+  students      Student[]
+  attendances   Attendance[]
+  
+  @@unique([grade, section])
+  @@map("classes")
+}
+
+model Attendance {
+  id            Int      @id @default(autoincrement())
+  studentId     Int
+  classId       Int
+  date          DateTime @db.Date
+  status        AttendanceStatus
+  notes         String?
+  createdAt     DateTime @default(now())
+  
+  // Relations
+  student       Student  @relation(fields: [studentId], references: [id])
+  class         Class    @relation(fields: [classId], references: [id])
+  
+  @@unique([studentId, date])
+  @@map("attendances")
+}
+
+model Payment {
+  id            Int      @id @default(autoincrement())
+  studentId     Int
+  amount        Decimal  @db.Decimal(10, 2)
+  dueDate       DateTime @db.Date
+  paidDate      DateTime? @db.Date
+  status        PaymentStatus
+  type          PaymentType
+  description   String?
+  createdAt     DateTime @default(now())
+  
+  // Relations
+  student       Student  @relation(fields: [studentId], references: [id])
+  
+  @@map("payments")
+}
+
+model Announcement {
+  id            Int      @id @default(autoincrement())
+  title         String
+  content       String
+  priority      AnnouncementPriority
+  author        String
+  publishDate   DateTime @default(now())
+  isActive      Boolean  @default(true)
+  targetAudience String  @default("all") // all, teachers, parents
+  
+  @@map("announcements")
+}
+
+model MealService {
+  id            Int      @id @default(autoincrement())
+  date          DateTime @db.Date
+  mealType      MealType
+  menuItems     String
+  totalOrders   Int      @default(0)
+  isActive      Boolean  @default(true)
+  
+  @@map("meal_services")
+}
+
+// Enums
+enum AttendanceStatus {
+  PRESENT     // حاضر
+  ABSENT      // غایب
+  LATE        // تأخیر
+  EXCUSED     // غیبت موجه
+}
+
+enum PaymentStatus {
+  PENDING     // در انتظار پرداخت
+  PAID        // پرداخت شده
+  OVERDUE     // معوقه
+  CANCELLED   // لغو شده
+}
+
+enum PaymentType {
+  TUITION     // شهریه
+  MEAL        // غذا
+  TRANSPORT   // سرویس
+  ACTIVITY    // فعالیت‌های فوق‌برنامه
+  OTHER       // سایر
+}
+
+enum AnnouncementPriority {
+  LOW         // عادی
+  MEDIUM      // متوسط
+  HIGH        // فوری
+}
+
+enum MealType {
+  BREAKFAST   // صبحانه
+  LUNCH       // ناهار
+  SNACK       // میان‌وعده
+}
