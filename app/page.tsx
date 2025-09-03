@@ -68,30 +68,53 @@ export default function Dashboard() {
     try {
       setLoading(true)
       
-      // Fetch all dashboard data in parallel
-      const [statsRes, alertsRes, announcementsRes] = await Promise.all([
-        fetch('/api/dashboard/stats'),
-        fetch('/api/dashboard/alerts'),
-        fetch('/api/announcements')
-      ])
+      // Use the new comprehensive refresh API
+      const response = await fetch('/api/dashboard/refresh')
+      const result = await response.json()
 
-      if (statsRes.ok) {
-        const statsData = await statsRes.json()
-        setStats(statsData)
-      }
-
-      if (alertsRes.ok) {
-        const alertsData = await alertsRes.json()
-        setAlerts(alertsData.alerts || [])
-      }
-
-      if (announcementsRes.ok) {
-        const announcementsData = await announcementsRes.json()
-        setAnnouncements(announcementsData.announcements || [])
+      if (result.success && result.data) {
+        const data = result.data
+        
+        // Update stats
+        setStats({
+          totalStudents: data.totalStudents,
+          presentToday: data.presentCountToday,
+          absentToday: data.absentCountToday,
+          lateToday: data.lateCountToday,
+          overduePayments: data.overduePayments,
+          activeClasses: data.activeClasses,
+          activeTeachers: data.presentTeachers,
+          todayMealOrders: data.foodMealsToday,
+          activeMealServices: data.activeServices
+        })
+        
+        // Update alerts
+        setAlerts(data.alerts || [])
+        
+        // Update announcements
+        setAnnouncements(data.announcements || [])
+        
+      } else {
+        // Use fallback data from API response
+        if (result.data) {
+          const data = result.data
+          setStats({
+            totalStudents: data.totalStudents,
+            presentToday: data.presentCountToday,
+            absentToday: data.absentCountToday,
+            lateToday: data.lateCountToday,
+            overduePayments: data.overduePayments,
+            activeClasses: data.activeClasses,
+            activeTeachers: data.presentTeachers,
+            todayMealOrders: data.foodMealsToday,
+            activeMealServices: data.activeServices
+          })
+          setAnnouncements(data.announcements || [])
+        }
       }
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
-      // Fallback to mock data if API fails
+      // Final fallback if everything fails
       setStats({
         totalStudents: 245,
         presentToday: 232,

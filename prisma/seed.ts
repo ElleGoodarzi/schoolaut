@@ -179,7 +179,7 @@ async function main() {
         studentId: student.id,
         classId: student.classId,
         date: today,
-        status: attendanceStatus as any
+        status: attendanceStatus
       }
     })
   }
@@ -202,7 +202,7 @@ async function main() {
         amount: 2500000, // 2.5 million tomans
         dueDate: currentMonth,
         paidDate: paymentStatus === 'PAID' ? new Date() : null,
-        status: paymentStatus as any,
+        status: paymentStatus,
         type: 'TUITION',
         description: 'شهریه ماهانه'
       }
