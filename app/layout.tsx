@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { AppProvider } from '@/lib/contexts/AppContext'
 
 export const metadata: Metadata = {
   title: 'دبستان مهرآیین - سیستم اتوماسیون مدرسه',
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className="font-vazir bg-gray-50">
-        {children}
+        <AppProvider>
+          {children}
+        </AppProvider>
       </body>
     </html>
   )

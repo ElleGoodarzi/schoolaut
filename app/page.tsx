@@ -4,8 +4,12 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import MainLayout from '@/components/MainLayout'
 import AnnouncementCard from '@/components/AnnouncementCard'
-import { AcademicCapIcon, UserGroupIcon, ClockIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline'
+import SmartAlertCard from '@/components/SmartAlertCard'
+import SmartBreadcrumbs from '@/components/SmartBreadcrumbs'
+import QuickAccessPanel from '@/components/QuickAccessPanel'
+import { AcademicCapIcon, UserGroupIcon, ClockIcon, CurrencyDollarIcon, CommandLineIcon } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useAppContext } from '@/lib/contexts/AppContext'
 
 interface DashboardStats {
   totalStudents: number
@@ -95,6 +99,13 @@ function AlertCard({ alert }: { alert: Alert }) {
 
 export default function Dashboard() {
   const router = useRouter()
+  const { 
+    navigateToStudent, 
+    navigateToFinancial, 
+    navigateToAttendance,
+    setShowQuickAccess,
+    showQuickAccess
+  } = useAppContext()
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -135,13 +146,40 @@ export default function Dashboard() {
   const handleQuickAction = (action: string) => {
     switch (action) {
       case 'attendance':
-        router.push('/attendance/today')
+        navigateToAttendance(undefined, '', 'dashboard-quick-action')
         break
       case 'announcement':
         setShowAnnouncementModal(true)
         break
       case 'financial':
-        router.push('/financial/reports')
+        navigateToFinancial(undefined, '', 'dashboard-quick-action')
+        break
+      case 'quick-access':
+        setShowQuickAccess(true)
+        break
+      default:
+        break
+    }
+  }
+
+  const handleAlertClick = (alert: Alert) => {
+    if (alert.type === 'overdue_payments') {
+      navigateToFinancial(undefined, 'overdue', 'dashboard-alert')
+    } else if (alert.type === 'frequent_absences') {
+      navigateToAttendance(undefined, 'frequent-absences', 'dashboard-alert')
+    }
+  }
+
+  const handleStatCardClick = (statType: string) => {
+    switch (statType) {
+      case 'students':
+        window.location.href = '/people/students'
+        break
+      case 'attendance':
+        navigateToAttendance(undefined, '', 'dashboard-stat')
+        break
+      case 'financial':
+        navigateToFinancial(undefined, '', 'dashboard-stat')
         break
       default:
         break
@@ -163,6 +201,9 @@ export default function Dashboard() {
   return (
     <MainLayout>
       <div className="fade-in">
+        {/* Smart Breadcrumbs */}
+        <SmartBreadcrumbs />
+
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -170,50 +211,68 @@ export default function Dashboard() {
               <h1 className="text-2xl font-bold text-gray-900 mb-2">داشبورد مدیریت</h1>
               <p className="text-gray-600">خلاصه‌ای از وضعیت فعلی مدرسه دبستان مهرآیین</p>
             </div>
-            <button
-              onClick={() => fetchDashboardData()}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-            >
-              بروزرسانی
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => handleQuickAction('quick-access')}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                title="دسترسی سریع (Ctrl+K)"
+              >
+                <CommandLineIcon className="w-4 h-4" />
+                دسترسی سریع
+              </button>
+              <button
+                onClick={() => fetchDashboardData()}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                بروزرسانی
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatCard
-            title="کل دانش‌آموزان"
-            value={englishToPersianNumbers(stats?.totalStudents || 0)}
-            icon={<AcademicCapIcon className="w-6 h-6" />}
-            color="blue"
-            subtitle={`در ${englishToPersianNumbers(stats?.activeClasses || 0)} کلاس`}
-          />
+          <div onClick={() => handleStatCardClick('students')} className="cursor-pointer">
+            <StatCard
+              title="کل دانش‌آموزان"
+              value={englishToPersianNumbers(stats?.totalStudents || 0)}
+              icon={<AcademicCapIcon className="w-6 h-6" />}
+              color="blue"
+              subtitle={`در ${englishToPersianNumbers(stats?.activeClasses || 0)} کلاس`}
+            />
+          </div>
           
-          <StatCard
-            title="حضور امروز"
-            value={englishToPersianNumbers(stats?.presentToday || 0)}
-            icon={<UserGroupIcon className="w-6 h-6" />}
-            color="green"
-            subtitle={`${englishToPersianNumbers(
-              stats?.totalStudents ? Math.round((stats.presentToday / stats.totalStudents) * 100) : 0
-            )}٪ حضور`}
-          />
+          <div onClick={() => handleStatCardClick('attendance')} className="cursor-pointer">
+            <StatCard
+              title="حضور امروز"
+              value={englishToPersianNumbers(stats?.presentToday || 0)}
+              icon={<UserGroupIcon className="w-6 h-6" />}
+              color="green"
+              subtitle={`${englishToPersianNumbers(
+                stats?.totalStudents ? Math.round((stats.presentToday / stats.totalStudents) * 100) : 0
+              )}٪ حضور`}
+            />
+          </div>
           
-          <StatCard
-            title="غیبت امروز"
-            value={englishToPersianNumbers(stats?.absentToday || 0)}
-            icon={<ClockIcon className="w-6 h-6" />}
-            color="yellow"
-            subtitle={`${englishToPersianNumbers(stats?.lateToday || 0)} تأخیر`}
-          />
+          <div onClick={() => handleStatCardClick('attendance')} className="cursor-pointer">
+            <StatCard
+              title="غیبت امروز"
+              value={englishToPersianNumbers(stats?.absentToday || 0)}
+              icon={<ClockIcon className="w-6 h-6" />}
+              color="yellow"
+              subtitle={`${englishToPersianNumbers(stats?.lateToday || 0)} تأخیر`}
+            />
+          </div>
           
-          <StatCard
-            title="شهریه معوقه"
-            value={englishToPersianNumbers(stats?.overduePayments || 0)}
-            icon={<CurrencyDollarIcon className="w-6 h-6" />}
-            color="red"
-            subtitle="نیاز به پیگیری"
-          />
+          <div onClick={() => handleStatCardClick('financial')} className="cursor-pointer">
+            <StatCard
+              title="شهریه معوقه"
+              value={englishToPersianNumbers(stats?.overduePayments || 0)}
+              icon={<CurrencyDollarIcon className="w-6 h-6" />}
+              color="red"
+              subtitle="نیاز به پیگیری"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -291,7 +350,13 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {alerts.length > 0 ? (
                   alerts.map((alert, index) => (
-                    <AlertCard key={index} alert={alert} />
+                    <SmartAlertCard 
+                      key={index} 
+                      alert={alert} 
+                      onClick={() => handleAlertClick(alert)}
+                      showActions={true}
+                      compact={false}
+                    />
                   ))
                 ) : (
                   <div className="text-center py-4 text-gray-500">
@@ -354,7 +419,7 @@ export default function Dashboard() {
                 <button
                   onClick={() => {
                     setShowAnnouncementModal(false)
-                    router.push('/announcements/new')
+                    window.location.href = '/communications/circulars/create'
                   }}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
                 >
@@ -370,6 +435,9 @@ export default function Dashboard() {
             </div>
           </div>
         )}
+
+        {/* Quick Access Panel */}
+        <QuickAccessPanel />
       </div>
     </MainLayout>
   )
