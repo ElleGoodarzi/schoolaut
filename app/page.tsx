@@ -3,18 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import MainLayout from '@/components/MainLayout'
-import StatCard from '@/components/StatCard'
 import AnnouncementCard from '@/components/AnnouncementCard'
-import AlertCard from '@/components/AlertCard'
-import { 
-  AcademicCapIcon, 
-  UserGroupIcon, 
-  ClockIcon,
-  CurrencyDollarIcon,
-  ChartBarIcon,
-  ExclamationTriangleIcon,
-  PlusIcon
-} from '@heroicons/react/24/outline'
+import { AcademicCapIcon, UserGroupIcon, ClockIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
 
 interface DashboardStats {
@@ -52,12 +42,62 @@ interface Announcement {
   targetAudience: string
 }
 
+// Helper Components
+function StatCard({ title, value, icon, color, subtitle }: {
+  title: string
+  value: string
+  icon: React.ReactNode
+  color: 'blue' | 'green' | 'yellow' | 'red'
+  subtitle?: string
+}) {
+  const colorClasses = {
+    blue: 'bg-blue-50 text-blue-600 border-blue-200',
+    green: 'bg-green-50 text-green-600 border-green-200',
+    yellow: 'bg-yellow-50 text-yellow-600 border-yellow-200',
+    red: 'bg-red-50 text-red-600 border-red-200'
+  }
+
+  return (
+    <div className="bg-white rounded-xl card-shadow border border-gray-200 p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm text-gray-600 mb-1">{title}</p>
+          <p className="text-2xl font-bold text-gray-900 persian-numbers">{value}</p>
+          {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
+        </div>
+        <div className={`p-3 rounded-lg border ${colorClasses[color]}`}>
+          {icon}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function AlertCard({ alert }: { alert: Alert }) {
+  const severityColors = {
+    high: 'bg-red-50 border-red-200 text-red-800',
+    medium: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+    low: 'bg-blue-50 border-blue-200 text-blue-800'
+  }
+
+  return (
+    <div className={`p-3 rounded-lg border ${severityColors[alert.severity]}`}>
+      <div className="flex items-center justify-between mb-1">
+        <h4 className="font-medium text-sm">{alert.title}</h4>
+        <span className="text-xs font-medium persian-numbers">
+          {englishToPersianNumbers(alert.count)}
+        </span>
+      </div>
+      <p className="text-xs opacity-90">{alert.message}</p>
+    </div>
+  )
+}
+
 export default function Dashboard() {
   const router = useRouter()
-  const [stats, setStats] = useState<DashboardStats | null>(null)
-  const [alerts, setAlerts] = useState<Alert[]>([])
-  const [announcements, setAnnouncements] = useState<Announcement[]>([])
+  const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [showAnnouncementModal, setShowAnnouncementModal] = useState(false)
 
   useEffect(() => {
@@ -66,70 +106,31 @@ export default function Dashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      setLoading(true)
-      
-      // Use the new comprehensive refresh API
+      console.log('🔄 Starting simple fetch...')
       const response = await fetch('/api/dashboard/refresh')
-      const result = await response.json()
-
-      if (result.success && result.data) {
-        const data = result.data
-        
-        // Update stats
-        setStats({
-          totalStudents: data.totalStudents,
-          presentToday: data.presentCountToday,
-          absentToday: data.absentCountToday,
-          lateToday: data.lateCountToday,
-          overduePayments: data.overduePayments,
-          activeClasses: data.activeClasses,
-          activeTeachers: data.presentTeachers,
-          todayMealOrders: data.foodMealsToday,
-          activeMealServices: data.activeServices
-        })
-        
-        // Update alerts
-        setAlerts(data.alerts || [])
-        
-        // Update announcements
-        setAnnouncements(data.announcements || [])
-        
-      } else {
-        // Use fallback data from API response
-        if (result.data) {
-          const data = result.data
-          setStats({
-            totalStudents: data.totalStudents,
-            presentToday: data.presentCountToday,
-            absentToday: data.absentCountToday,
-            lateToday: data.lateCountToday,
-            overduePayments: data.overduePayments,
-            activeClasses: data.activeClasses,
-            activeTeachers: data.presentTeachers,
-            todayMealOrders: data.foodMealsToday,
-            activeMealServices: data.activeServices
-          })
-          setAnnouncements(data.announcements || [])
-        }
+      console.log('📡 Response:', response.status, response.ok)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error)
-      // Final fallback if everything fails
-      setStats({
-        totalStudents: 245,
-        presentToday: 232,
-        absentToday: 13,
-        lateToday: 3,
-        overduePayments: 18,
-        activeClasses: 12,
-        activeTeachers: 24,
-        todayMealOrders: 215,
-        activeMealServices: 8
-      })
+      
+      const result = await response.json()
+      console.log('📊 Result:', result)
+      
+      setData(result)
+    } catch (err) {
+      console.error('❌ Error:', err)
+      setError(err instanceof Error ? err.message : 'Unknown error')
     } finally {
+      console.log('✅ Finished')
       setLoading(false)
     }
   }
+
+  // Extract data from API response
+  const stats = data?.data || {}
+  const alerts = data?.data?.alerts || []
+  const announcements = data?.data?.recentAnnouncements || []
 
   const handleQuickAction = (action: string) => {
     switch (action) {
@@ -339,6 +340,7 @@ export default function Dashboard() {
                 <button
                   onClick={() => setShowAnnouncementModal(false)}
                   className="text-gray-400 hover:text-gray-600"
+                  title="بستن"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

@@ -1,12 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-  i18n: {
-    locales: ['fa'],
-    defaultLocale: 'fa',
-  },
+  // App Router is enabled by default in Next.js 14
+  // Removed deprecated experimental.appDir
+  // i18n config is not compatible with App Router
 }
 
 module.exports = nextConfig
