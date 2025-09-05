@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import MainLayout from '@/components/MainLayout'
+import AddStudentModal from '@/components/AddStudentModal'
 import { 
   AcademicCapIcon, 
   PlusIcon,
@@ -9,6 +10,7 @@ import {
   UserIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useAppContext } from '@/lib/contexts/AppContext'
 
 interface Student {
   id: number
@@ -32,6 +34,8 @@ export default function Students() {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedGrade, setSelectedGrade] = useState<string>('all')
+  const [showAddModal, setShowAddModal] = useState(false)
+  const { triggerDashboardRefresh } = useAppContext()
 
   useEffect(() => {
     fetchStudents()
@@ -43,14 +47,25 @@ export default function Students() {
       const response = await fetch('/api/students')
       const result = await response.json()
       
-      if (result.success && result.data.students) {
-        setStudents(result.data.students)
+      if (result.success && result.data) {
+        setStudents(result.data)
       }
     } catch (error) {
       console.error('Error fetching students:', error)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleAddStudent = (newStudent: Student) => {
+    // Add new student to the beginning of the list
+    setStudents(prev => [newStudent, ...prev])
+    
+    // Trigger dashboard refresh to update student count and related metrics
+    triggerDashboardRefresh()
+    
+    // Show success message
+    console.log('✅ Student added successfully:', newStudent)
   }
 
   const filteredStudents = students.filter(student => {
@@ -87,7 +102,10 @@ export default function Students() {
       <div className="fade-in">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-900">دانش‌آموزان</h1>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          <button 
+            onClick={() => setShowAddModal(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          >
             <PlusIcon className="h-5 w-5" />
             افزودن دانش‌آموز
           </button>
@@ -110,6 +128,7 @@ export default function Students() {
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               value={selectedGrade}
               onChange={(e) => setSelectedGrade(e.target.value)}
+              title="فیلتر پایه تحصیلی"
             >
               <option value="all">همه پایه‌ها</option>
               <option value="1">پایه اول</option>
@@ -145,9 +164,14 @@ export default function Students() {
                         <AcademicCapIcon className="h-6 w-6 text-blue-600" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">
-                          {student.firstName} {student.lastName}
-                        </h3>
+                        <button
+                          onClick={() => window.location.href = `/students/${student.id}`}
+                          className="text-left hover:text-blue-600 transition-colors"
+                        >
+                          <h3 className="font-semibold text-gray-900 hover:text-blue-600">
+                            {student.firstName} {student.lastName}
+                          </h3>
+                        </button>
                         <p className="text-sm text-gray-600">
                           شماره دانش‌آموزی: {englishToPersianNumbers(student.studentId)}
                         </p>
@@ -167,6 +191,13 @@ export default function Students() {
             </div>
           )}
         </div>
+
+        {/* Add Student Modal */}
+        <AddStudentModal
+          isOpen={showAddModal}
+          onClose={() => setShowAddModal(false)}
+          onSuccess={handleAddStudent}
+        />
       </div>
     </MainLayout>
   )

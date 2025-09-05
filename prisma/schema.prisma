@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,122 +8,126 @@ datasource db {
 }
 
 model Student {
-  id            Int      @id @default(autoincrement())
-  studentId     String   @unique // شماره دانش‌آموزی
-  firstName     String
-  lastName      String
-  fatherName    String
-  nationalId    String   @unique
-  birthDate     DateTime
-  grade         Int      // پایه تحصیلی (1-6)
-  section       String   // شعبه (الف، ب، ج)
-  classId       Int
-  enrollmentDate DateTime @default(now())
-  isActive      Boolean  @default(true)
-  
-  // Relations
-  class         Class    @relation(fields: [classId], references: [id])
-  attendances   Attendance[]
-  payments      Payment[]
-  
+  id               Int                      @id @default(autoincrement())
+  studentId        String                   @unique
+  firstName        String
+  lastName         String
+  fatherName       String
+  nationalId       String                   @unique
+  birthDate        DateTime
+  grade            Int
+  section          String
+  classId          Int
+  phone            String?
+  address          String?
+  enrollmentDate   DateTime                 @default(now())
+  isActive         Boolean                  @default(true)
+  attendances      Attendance[]
+  payments         Payment[]
+  classAssignments StudentClassAssignment[]
+  class            Class                    @relation(fields: [classId], references: [id])
+
   @@map("students")
 }
 
 model Teacher {
-  id            Int      @id @default(autoincrement())
-  employeeId    String   @unique
-  firstName     String
-  lastName      String
-  nationalId    String   @unique
-  phone         String
-  email         String?
-  hireDate      DateTime
-  isActive      Boolean  @default(true)
-  
-  // Relations
-  classes       Class[]
-  
+  id         Int      @id @default(autoincrement())
+  employeeId String   @unique
+  firstName  String
+  lastName   String
+  nationalId String   @unique
+  phone      String
+  email      String?
+  hireDate   DateTime
+  isActive   Boolean  @default(true)
+  classes    Class[]
+
   @@map("teachers")
 }
 
 model Class {
-  id            Int      @id @default(autoincrement())
-  grade         Int      // پایه (1-6)
-  section       String   // شعبه (الف، ب، ج)
-  teacherId     Int
-  capacity      Int      @default(30)
-  isActive      Boolean  @default(true)
-  
-  // Relations
-  teacher       Teacher  @relation(fields: [teacherId], references: [id])
-  students      Student[]
-  attendances   Attendance[]
-  
+  id               Int                      @id @default(autoincrement())
+  grade            Int
+  section          String
+  teacherId        Int
+  capacity         Int                      @default(30)
+  isActive         Boolean                  @default(true)
+  attendances      Attendance[]
+  classAssignments StudentClassAssignment[]
+  teacher          Teacher                  @relation(fields: [teacherId], references: [id])
+  students         Student[]
+
   @@unique([grade, section])
   @@map("classes")
 }
 
 model Attendance {
-  id            Int      @id @default(autoincrement())
-  studentId     Int
-  classId       Int
-  date          DateTime
-  status        String // PRESENT, ABSENT, LATE, EXCUSED
-  notes         String?
-  createdAt     DateTime @default(now())
-  
-  // Relations
-  student       Student  @relation(fields: [studentId], references: [id])
-  class         Class    @relation(fields: [classId], references: [id])
-  
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  classId   Int
+  date      DateTime
+  status    String
+  notes     String?
+  createdAt DateTime @default(now())
+  class     Class    @relation(fields: [classId], references: [id])
+  student   Student  @relation(fields: [studentId], references: [id])
+
   @@unique([studentId, date])
   @@map("attendances")
 }
 
 model Payment {
-  id            Int      @id @default(autoincrement())
-  studentId     Int
-  amount        Float
-  dueDate       DateTime
-  paidDate      DateTime?
-  status        String // PENDING, PAID, OVERDUE, CANCELLED
-  type          String // TUITION, MEAL, TRANSPORT, ACTIVITY, OTHER
-  description   String?
-  createdAt     DateTime @default(now())
-  
-  // Relations
-  student       Student  @relation(fields: [studentId], references: [id])
-  
+  id          Int       @id @default(autoincrement())
+  studentId   Int
+  amount      Float
+  dueDate     DateTime
+  paidDate    DateTime?
+  status      String
+  type        String
+  description String?
+  createdAt   DateTime  @default(now())
+  student     Student   @relation(fields: [studentId], references: [id])
+
   @@map("payments")
 }
 
 model Announcement {
-  id            Int      @id @default(autoincrement())
-  title         String
-  content       String
-  priority      String // LOW, MEDIUM, HIGH
-  author        String
-  publishDate   DateTime @default(now())
-  isActive      Boolean  @default(true)
-  targetAudience String  @default("all") // all, teachers, parents
-  
+  id             Int      @id @default(autoincrement())
+  title          String
+  content        String
+  priority       String
+  author         String
+  publishDate    DateTime @default(now())
+  isActive       Boolean  @default(true)
+  targetAudience String   @default("all")
+
   @@map("announcements")
 }
 
 model MealService {
-  id            Int      @id @default(autoincrement())
-  date          DateTime
-  mealType      String // BREAKFAST, LUNCH, SNACK
-  menuItems     String
-  totalOrders   Int      @default(0)
-  isActive      Boolean  @default(true)
-  
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  mealType    String
+  menuItems   String
+  totalOrders Int      @default(0)
+  isActive    Boolean  @default(true)
+
   @@map("meal_services")
 }
 
-// Note: SQLite doesn't support enums, so we use strings with comments
-// AttendanceStatus: PRESENT, ABSENT, LATE, EXCUSED
-// PaymentStatus: PENDING, PAID, OVERDUE, CANCELLED  
-// PaymentType: TUITION, MEAL, TRANSPORT, ACTIVITY, OTHER
-// AnnouncementPriority: LOW, MEDIUM, HIGH
-// MealType: BREAKFAST, LUNCH, SNACK
+model StudentClassAssignment {
+  id               Int       @id @default(autoincrement())
+  studentId        Int
+  classId          Int
+  startDate        DateTime
+  endDate          DateTime?
+  reason           String?
+  isActive         Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  student          Student   @relation(fields: [studentId], references: [id])
+  class            Class     @relation(fields: [classId], references: [id])
+
+  @@unique([studentId, classId, startDate])
+  @@map("student_class_assignments")
+}

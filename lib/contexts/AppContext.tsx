@@ -43,6 +43,7 @@ interface AppContextType {
   // UI state
   sidebarCollapsed: boolean
   showQuickAccess: boolean
+  dashboardNeedsRefresh: boolean
   
   // Actions
   setSelectedStudent: (id: number | null) => void
@@ -70,6 +71,8 @@ interface AppContextType {
   getRecentStudents: () => Array<{ id: number; name: string; lastVisited: Date }>
   getRecentTeachers: () => Array<{ id: number; name: string; lastVisited: Date }>
   clearRecentEntities: () => void
+  triggerDashboardRefresh: () => void
+  setDashboardRefreshed: () => void
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
@@ -83,10 +86,26 @@ export function AppProvider({ children }: AppProviderProps) {
   const [selectedTeacherId, setSelectedTeacherId] = useState<number | null>(null)
   const [selectedClassId, setSelectedClassId] = useState<number | null>(null)
   const [activeFilters, setActiveFilters] = useState({})
-  const [navigationContext, setNavigationContext] = useState({})
+  const [navigationContext, setNavigationContext] = useState<{
+    sourceModule?: string
+    targetModule?: string
+    highlightField?: string
+    activeTab?: string
+    previousUrl?: string
+    breadcrumbs?: Array<{
+      label: string
+      url: string
+      context?: any
+    }>
+  }>({})
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [showQuickAccess, setShowQuickAccess] = useState(false)
-  const [recentEntities, setRecentEntities] = useState({
+  const [dashboardNeedsRefresh, setDashboardNeedsRefresh] = useState(false)
+  const [recentEntities, setRecentEntities] = useState<{
+    students: Array<{ id: number; name: string; lastVisited: Date }>
+    teachers: Array<{ id: number; name: string; lastVisited: Date }>
+    classes: Array<{ id: number; name: string; lastVisited: Date }>
+  }>({
     students: [],
     teachers: [],
     classes: []
@@ -279,6 +298,14 @@ export function AppProvider({ children }: AppProviderProps) {
     })
   }
 
+  const triggerDashboardRefresh = () => {
+    setDashboardNeedsRefresh(true)
+  }
+
+  const setDashboardRefreshed = () => {
+    setDashboardNeedsRefresh(false)
+  }
+
   const value: AppContextType = {
     selectedStudentId,
     selectedTeacherId,
@@ -288,6 +315,7 @@ export function AppProvider({ children }: AppProviderProps) {
     recentEntities,
     sidebarCollapsed,
     showQuickAccess,
+    dashboardNeedsRefresh,
     setSelectedStudent: setSelectedStudentId,
     setSelectedTeacher: setSelectedTeacherId,
     setSelectedClass: setSelectedClassId,
@@ -307,6 +335,8 @@ export function AppProvider({ children }: AppProviderProps) {
     getRecentStudents,
     getRecentTeachers,
     clearRecentEntities,
+    triggerDashboardRefresh,
+    setDashboardRefreshed,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

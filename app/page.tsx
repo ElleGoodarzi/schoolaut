@@ -104,7 +104,9 @@ export default function Dashboard() {
     navigateToFinancial, 
     navigateToAttendance,
     setShowQuickAccess,
-    showQuickAccess
+    showQuickAccess,
+    dashboardNeedsRefresh,
+    setDashboardRefreshed
   } = useAppContext()
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -114,6 +116,14 @@ export default function Dashboard() {
   useEffect(() => {
     fetchDashboardData()
   }, [])
+
+  // Watch for dashboard refresh trigger
+  useEffect(() => {
+    if (dashboardNeedsRefresh) {
+      fetchDashboardData()
+      setDashboardRefreshed()
+    }
+  }, [dashboardNeedsRefresh, setDashboardRefreshed])
 
   const fetchDashboardData = async () => {
     try {

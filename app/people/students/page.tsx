@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import MainLayout from '@/components/MainLayout'
+import AddStudentModal from '@/components/AddStudentModal'
 import StudentCard from '@/components/shared/cards/StudentCard'
 import AttendanceModule from '@/components/modules/AttendanceModule'
 import FinancialModule from '@/components/modules/FinancialModule'
@@ -45,6 +46,7 @@ export default function StudentsPage() {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedGrade, setSelectedGrade] = useState<string>('all')
+  const [showAddModal, setShowAddModal] = useState(false)
   const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'overview')
 
   const tabs = [
@@ -71,8 +73,8 @@ export default function StudentsPage() {
       const response = await fetch('/api/students')
       const result = await response.json()
       
-      if (result.success && result.data.students) {
-        setStudents(result.data.students)
+      if (result.success && result.data) {
+        setStudents(result.data)
       }
     } catch (error) {
       console.error('Error fetching students:', error)
@@ -98,6 +100,14 @@ export default function StudentsPage() {
     setSelectedStudent(student.id)
     const url = navigateToStudent(student.id, context)
     router.push(url)
+  }
+
+  const handleAddStudent = (newStudent: Student) => {
+    // Add new student to the beginning of the list
+    setStudents(prev => [newStudent, ...prev])
+    
+    // Show success message
+    console.log('✅ Student added successfully:', newStudent)
   }
 
   const filteredStudents = students.filter(student => {
@@ -137,7 +147,10 @@ export default function StudentsPage() {
             <h1 className="text-2xl font-bold text-gray-900">مدیریت دانش‌آموزان</h1>
             <p className="text-gray-600 mt-1">مدیریت جامع اطلاعات و خدمات دانش‌آموزان</p>
           </div>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          <button 
+            onClick={() => setShowAddModal(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          >
             <PlusIcon className="h-5 w-5" />
             افزودن دانش‌آموز
           </button>
@@ -186,11 +199,12 @@ export default function StudentsPage() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                       />
                     </div>
-                    <select
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      value={selectedGrade}
-                      onChange={(e) => setSelectedGrade(e.target.value)}
-                    >
+                                    <select
+                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={selectedGrade}
+                  onChange={(e) => setSelectedGrade(e.target.value)}
+                  title="فیلتر پایه تحصیلی"
+                >
                       <option value="all">همه پایه‌ها</option>
                       <option value="1">پایه اول</option>
                       <option value="2">پایه دوم</option>
@@ -320,6 +334,13 @@ export default function StudentsPage() {
             )}
           </div>
         </div>
+
+        {/* Add Student Modal */}
+        <AddStudentModal
+          isOpen={showAddModal}
+          onClose={() => setShowAddModal(false)}
+          onSuccess={handleAddStudent}
+        />
       </div>
     </MainLayout>
   )
