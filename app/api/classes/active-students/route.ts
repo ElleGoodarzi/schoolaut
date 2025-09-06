@@ -36,7 +36,11 @@ export async function GET(request: NextRequest) {
       whereClause.classId = parseInt(classId)
     }
 
-    // Fetch active class assignments for the specified date
+    // Normalize target date to start of day for attendance lookup
+    const normalizedDate = new Date(targetDate)
+    normalizedDate.setHours(0, 0, 0, 0)
+
+    // Fetch active class assignments for the specified date with attendance data
     const activeAssignments = await db.studentClassAssignment.findMany({
       where: whereClause,
       include: {
@@ -48,7 +52,16 @@ export async function GET(request: NextRequest) {
             lastName: true,
             nationalId: true,
             phone: true,
-            isActive: true
+            isActive: true,
+            attendances: {
+              where: {
+                date: normalizedDate
+              },
+              select: {
+                status: true,
+                notes: true
+              }
+            }
           }
         },
         class: {
@@ -91,6 +104,7 @@ export async function GET(request: NextRequest) {
         }
       }
 
+      const attendanceData = assignment.student.attendances[0]
       studentsByClass[classKey].students.push({
         id: assignment.student.id,
         studentId: assignment.student.studentId,
@@ -102,7 +116,9 @@ export async function GET(request: NextRequest) {
         isActive: assignment.student.isActive,
         assignmentId: assignment.id,
         startDate: assignment.startDate.toLocaleDateString('fa-IR'),
-        endDate: assignment.endDate?.toLocaleDateString('fa-IR') || null
+        endDate: assignment.endDate?.toLocaleDateString('fa-IR') || null,
+        attendanceStatus: attendanceData?.status || null,
+        attendanceNotes: attendanceData?.notes || ''
       })
       
       studentsByClass[classKey].totalStudents++
@@ -130,7 +146,7 @@ export async function GET(request: NextRequest) {
         },
         classes: classesList,
         // Flat list of all active students for easy processing
-        allStudents: activeAssignments.map(assignment => ({
+        allStudents: activeAssignments.map((assignment: any) => ({
           id: assignment.student.id,
           studentId: assignment.student.studentId,
           name: `${assignment.student.firstName} ${assignment.student.lastName}`,

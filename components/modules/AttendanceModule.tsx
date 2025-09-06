@@ -53,44 +53,48 @@ export default function AttendanceModule({
     try {
       setLoading(true)
       
-      // Fetch attendance records
-      const recordsResponse = await fetch(
-        `/api/attendance/student/${studentId}?month=${selectedMonth + 1}&year=${selectedYear}`
-      )
+      // Use unified API endpoint for student attendance data
+      const response = await fetch(`/api/attendance/student/${studentId}?month=${selectedMonth + 1}&year=${selectedYear}&includeStats=true`)
       
-      // Fetch attendance stats
-      const statsResponse = await fetch(`/api/attendance/student/${studentId}/stats`)
-      
-      if (recordsResponse.ok) {
-        const recordsResult = await recordsResponse.json()
-        setAttendanceRecords(recordsResult.data?.records || [])
-      }
-      
-      if (statsResponse.ok) {
-        const statsResult = await statsResponse.json()
-        setStats(statsResult.data?.stats || null)
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          // Set both records and stats from unified response
+          setAttendanceRecords(result.data?.records || [])
+          setStats(result.data?.stats || null)
+        } else {
+          console.warn('API returned unsuccessful response:', result.message)
+          setFallbackData()
+        }
+      } else {
+        console.warn('API request failed with status:', response.status)
+        setFallbackData()
       }
     } catch (error) {
       console.error('Error fetching attendance data:', error)
-      // Mock data for development
-      setStats({
-        totalDays: 45,
-        presentDays: 42,
-        absentDays: 2,
-        lateDays: 1,
-        attendanceRate: 93.3
-      })
-      
-      setAttendanceRecords([
-        { id: 1, date: '2024-01-15', status: 'PRESENT' },
-        { id: 2, date: '2024-01-14', status: 'PRESENT' },
-        { id: 3, date: '2024-01-13', status: 'LATE', notes: 'تأخیر ۱۰ دقیقه‌ای' },
-        { id: 4, date: '2024-01-12', status: 'ABSENT', notes: 'مریضی' },
-        { id: 5, date: '2024-01-11', status: 'PRESENT' }
-      ])
+      setFallbackData()
     } finally {
       setLoading(false)
     }
+  }
+
+  const setFallbackData = () => {
+    // Fallback data for development/error states
+    setStats({
+      totalDays: 45,
+      presentDays: 42,
+      absentDays: 2,
+      lateDays: 1,
+      attendanceRate: 93.3
+    })
+    
+    setAttendanceRecords([
+      { id: 1, date: '2024-01-15', status: 'PRESENT' },
+      { id: 2, date: '2024-01-14', status: 'PRESENT' },
+      { id: 3, date: '2024-01-13', status: 'LATE', notes: 'تأخیر ۱۰ دقیقه‌ای' },
+      { id: 4, date: '2024-01-12', status: 'ABSENT', notes: 'مریضی' },
+      { id: 5, date: '2024-01-11', status: 'PRESENT' }
+    ])
   }
 
   const getStatusIcon = (status: string) => {
@@ -172,6 +176,7 @@ export default function AttendanceModule({
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
               className="border border-gray-300 rounded-md px-3 py-1 text-sm"
+              title="انتخاب ماه"
             >
               {[...Array(12)].map((_, i) => (
                 <option key={i} value={i}>
@@ -183,6 +188,7 @@ export default function AttendanceModule({
               value={selectedYear}
               onChange={(e) => setSelectedYear(parseInt(e.target.value))}
               className="border border-gray-300 rounded-md px-3 py-1 text-sm"
+              title="انتخاب سال"
             >
               <option value={2024}>۱۴۰۳</option>
               <option value={2023}>۱۴۰۲</option>

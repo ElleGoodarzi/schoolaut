@@ -169,7 +169,7 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
               <div>
                 <label className="text-sm text-gray-600">نام و نام خانوادگی</label>
                 <p className="font-medium">{student.firstName} {student.lastName}</p>
-              </div>
+          </div>
               <div>
                 <label className="text-sm text-gray-600">نام پدر</label>
                 <p className="font-medium">{student.fatherName}</p>
@@ -258,7 +258,7 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
       ? Math.round((attendanceStats.present / attendanceStats.total) * 100)
       : 100
 
-    return (
+              return (
       <div className="space-y-6">
         {/* Attendance Statistics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -298,8 +298,14 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
 
         {/* Attendance Records */}
         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
+          <div className="px-4 py-3 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
             <h3 className="font-semibold text-gray-900">سوابق حضور و غیاب</h3>
+            <a 
+              href="/attendance" 
+              className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              مدیریت حضور و غیاب ←
+            </a>
           </div>
           <div className="divide-y divide-gray-200 max-h-96 overflow-y-auto">
             {filteredAttendances.length === 0 ? (
@@ -316,7 +322,7 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
                         <p className="text-sm text-gray-600">{attendance.notes}</p>
                       )}
                     </div>
-                    <div>
+              <div>
                       {getStatusBadge(attendance.status, 'attendance')}
                     </div>
                   </div>
@@ -413,7 +419,7 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
                     </div>
                     <div>
                       {getStatusBadge(payment.status, 'payment')}
-                    </div>
+                  </div>
                   </div>
                 </div>
               ))
@@ -446,7 +452,7 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
               
               <div className="space-y-2">
                 {service.route && (
-                  <div>
+              <div>
                     <label className="text-sm text-gray-600">مسیر</label>
                     <p className="font-medium">{service.route}</p>
                   </div>
@@ -466,8 +472,8 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
           <div className="text-center py-12">
             <TruckIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-600">سرویسی ثبت نشده است</p>
-          </div>
-        )}
+            </div>
+          )}
       </div>
     )
   }
@@ -609,8 +615,8 @@ function ClassAssignmentTab({ student, onRefresh }: { student: StudentData, onRe
               )
             }
           })()}
-        </div>
-      )}
+            </div>
+          )}
 
       {/* Class History */}
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
