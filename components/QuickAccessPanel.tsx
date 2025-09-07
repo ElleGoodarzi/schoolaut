@@ -39,36 +39,44 @@ export default function QuickAccessPanel() {
 
   const quickActions: QuickAction[] = [
     {
-      id: 'attendance-today',
-      label: 'حضور امروز',
-      shortcut: 'Ctrl+A',
-      action: () => navigateToAttendance(undefined, '', 'quick-access'),
-      icon: ClockIcon,
-      category: 'navigation'
-    },
-    {
       id: 'financial-overdue',
       label: 'شهریه‌های معوقه',
       shortcut: 'Ctrl+F',
       action: () => navigateToFinancial(undefined, 'overdue', 'quick-access'),
       icon: CommandLineIcon,
-      category: 'navigation'
+      category: 'action'
     },
     {
-      id: 'students-list',
-      label: 'فهرست دانش‌آموزان',
-      shortcut: 'Ctrl+S',
-      action: () => navigateToStudent(0, 'overview', '', 'quick-access'), // Will redirect to list
+      id: 'attendance-export',
+      label: 'خروجی حضور امروز',
+      shortcut: 'Ctrl+E',
+      action: () => {
+        const today = new Date().toISOString().split('T')[0]
+        window.open(`/api/attendance/export?date=${today}`, '_blank')
+      },
+      icon: ClockIcon,
+      category: 'action'
+    },
+    {
+      id: 'mark-all-present',
+      label: 'همه حاضر (کلاس فعال)',
+      shortcut: 'Ctrl+P',
+      action: () => {
+        // This would need to be connected to current class context
+        alert('برای استفاده از این قابلیت، ابتدا یک کلاس انتخاب کنید')
+      },
       icon: UserIcon,
-      category: 'navigation'
+      category: 'action'
     },
     {
-      id: 'dashboard',
-      label: 'داشبورد اصلی',
-      shortcut: 'Ctrl+H',
-      action: () => window.location.href = '/',
+      id: 'daily-report',
+      label: 'گزارش روزانه',
+      shortcut: 'Ctrl+R',
+      action: () => {
+        window.open('/api/dashboard/refresh', '_blank')
+      },
       icon: AcademicCapIcon,
-      category: 'navigation'
+      category: 'action'
     }
   ]
 

@@ -1,11 +1,13 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { getTodayDate } from '@/lib/utils'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const today = getTodayDate()
-    const todayDate = new Date(today)
+    const searchParams = request.nextUrl.searchParams
+    const dateParam = searchParams.get('date') || getTodayDate()
+    const todayDate = new Date(dateParam)
+    todayDate.setHours(0, 0, 0, 0)
     
     // Get attendance stats for today
     const attendanceStats = await prisma.attendance.groupBy({
@@ -38,7 +40,7 @@ export async function GET() {
         totalMarked,
         totalStudents,
         attendanceRate,
-        date: today,
+        date: dateParam,
         lastUpdated: new Date().toISOString()
       }
     })

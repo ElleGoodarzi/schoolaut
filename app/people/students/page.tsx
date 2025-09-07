@@ -27,7 +27,9 @@ interface Student {
   lastName: string
   grade: number
   section: string
+  classId?: number
   class: {
+    id: number
     grade: number
     section: string
     teacher: {
@@ -266,6 +268,7 @@ export default function StudentsPage() {
                       </div>
                       <AttendanceModule 
                         studentId={student.id} 
+                        classId={student.class?.id}
                         showTitle={false} 
                         compact={true}
                       />

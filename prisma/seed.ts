@@ -171,15 +171,20 @@ async function main() {
   today.setHours(0, 0, 0, 0)
 
   for (const student of students) {
-    const attendanceStatus = Math.random() < 0.95 ? 'PRESENT' : 
-                           Math.random() < 0.7 ? 'ABSENT' : 'LATE'
+    const rand = Math.random()
+    const attendanceStatus = rand < 0.85 ? 'PRESENT' : 
+                           rand < 0.92 ? 'ABSENT' : 
+                           rand < 0.97 ? 'LATE' : 'EXCUSED'
     
     await prisma.attendance.create({
       data: {
         studentId: student.id,
         classId: student.classId,
         date: today,
-        status: attendanceStatus
+        status: attendanceStatus,
+        notes: attendanceStatus === 'EXCUSED' ? 'مرخصی استعلاجی' : 
+               attendanceStatus === 'LATE' ? 'تأخیر ۱۵ دقیقه‌ای' :
+               attendanceStatus === 'ABSENT' ? 'غیبت بدون اطلاع' : ''
       }
     })
   }

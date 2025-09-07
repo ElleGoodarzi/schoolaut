@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { 
@@ -12,6 +12,8 @@ import {
 } from '@heroicons/react/24/outline'
 import { useAppContext } from '@/lib/contexts/AppContext'
 import { sidebarSchema, getActiveItems, shouldShowBadge, getBadgeCount } from '@/lib/sidebar/SidebarSchema'
+import { logButtonStatusReport } from '@/lib/sidebar/SidebarAudit'
+import { logNavigationAudit } from '@/lib/sidebar/ConsolidationAudit'
 import type { SidebarItem, SidebarCategory } from '@/lib/sidebar/SidebarSchema'
 
 interface BadgeProps {
@@ -57,10 +59,12 @@ function SidebarItemComponent({ item, isActive, level, onItemClick }: SidebarIte
 
   const itemClasses = `
     flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
-    hover:bg-gray-50 hover:scale-[1.02] group relative
-    ${isActive 
-      ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-600 shadow-sm' 
-      : 'text-gray-700 hover:text-blue-600'
+    group relative
+    ${item.disabled 
+      ? 'text-gray-400 cursor-not-allowed opacity-60' 
+      : isActive 
+        ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-600 shadow-sm hover:bg-blue-100' 
+        : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50 hover:scale-[1.02]'
     }
     ${level > 0 ? 'mr-4 text-sm' : ''}
   `
@@ -93,6 +97,29 @@ function SidebarItemComponent({ item, isActive, level, onItemClick }: SidebarIte
             <ChevronDownIcon className="w-4 h-4 text-gray-400" />
           )}
         </button>
+      ) : item.disabled ? (
+        <div
+          className={itemClasses}
+          title={item.tooltip}
+        >
+          <Icon className="w-5 h-5 text-gray-400" />
+          <span className="font-medium flex-1">{item.title}</span>
+          
+          {/* Development Badge */}
+          {item.status === 'development' && (
+            <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+              در حال توسعه
+            </span>
+          )}
+          
+          {/* Badge */}
+          {badgeCount > 0 && (
+            <Badge 
+              text={badgeCount.toString()} 
+              color={item.badge?.color || 'red'} 
+            />
+          )}
+        </div>
       ) : (
         <Link
           href={item.path}
@@ -207,6 +234,12 @@ export default function ModularSidebar() {
   const pathname = usePathname()
   
   const activeItems = getActiveItems(pathname)
+
+  // Log comprehensive navigation audit on component mount
+  React.useEffect(() => {
+    logButtonStatusReport()
+    logNavigationAudit()
+  }, [])
 
   const toggleMobileSidebar = () => setIsMobileOpen(!isMobileOpen)
   const closeMobileSidebar = () => setIsMobileOpen(false)

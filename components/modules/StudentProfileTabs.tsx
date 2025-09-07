@@ -9,6 +9,7 @@ import {
   CheckCircleIcon,
   XCircleIcon,
   ClockIcon,
+  ExclamationTriangleIcon,
   BanknotesIcon,
   TruckIcon,
   CakeIcon,
@@ -103,6 +104,13 @@ export default function StudentProfileTab({ activeTab, student, onRefresh }: Pro
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
               <ClockIcon className="h-3 w-3 mr-1" />
               تاخیر
+            </span>
+          )
+        case 'EXCUSED':
+          return (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              <ExclamationTriangleIcon className="h-3 w-3 mr-1" />
+              مرخصی
             </span>
           )
         default:

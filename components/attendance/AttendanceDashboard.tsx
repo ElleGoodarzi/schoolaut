@@ -15,9 +15,11 @@ import {
   UserGroupIcon,
   CheckIcon,
   XMarkIcon,
-  ArrowPathIcon
+  ArrowPathIcon,
+  Bars3Icon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface Student {
   id: number
@@ -64,6 +66,9 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
   const [classFilter, setClassFilter] = useState('all')
   const [expandedClasses, setExpandedClasses] = useState<Set<number>>(new Set())
   const [saving, setSaving] = useState(false)
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const { success, error, info } = useToast()
+
 
   useEffect(() => {
     fetchAttendanceData()
@@ -119,8 +124,9 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
       if (statsResult.success) {
         setAttendanceStats(statsResult.data)
       }
-    } catch (error) {
-      console.error('Error fetching attendance data:', error)
+    } catch (err) {
+      console.error('Error fetching attendance data:', err)
+      error('خطا در بارگیری اطلاعات حضور و غیاب')
       setClasses([])
       setAttendanceStats(null)
     } finally {
@@ -147,6 +153,9 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
 
       if (response.ok) {
         // Update local state
+        const student = classes.flatMap(c => c.students).find(s => s.id === studentId)
+        const statusText = status === 'PRESENT' ? 'حاضر' : status === 'ABSENT' ? 'غایب' : status === 'LATE' ? 'تأخیر' : 'مرخصی'
+        
         setClasses(prevClasses => 
           prevClasses.map(classData => ({
             ...classData,
@@ -158,14 +167,16 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
           }))
         )
         
+        success(`حضور ثبت شد برای ${student?.firstName} ${student?.lastName} - ${statusText}`)
+        
         // Refresh stats
         await fetchAttendanceStats()
       } else {
         throw new Error('Failed to update attendance')
       }
-    } catch (error) {
-      console.error('Error updating attendance:', error)
-      alert('خطا در ثبت حضور و غیاب')
+    } catch (err) {
+      console.error('Error updating attendance:', err)
+      error('خطا در ثبت حضور و غیاب')
     } finally {
       setSaving(false)
     }
@@ -206,6 +217,8 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
       })
 
       if (response.ok) {
+        const statusText = status === 'PRESENT' ? 'حاضر' : 'غایب'
+        
         // Update local state
         setClasses(prevClasses => 
           prevClasses.map(classData => 
@@ -221,11 +234,12 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
           )
         )
         
+        success(`تمامی دانش‌آموزان ${statusText} شدند`)
         await fetchAttendanceStats()
       }
-    } catch (error) {
-      console.error('Error in bulk update:', error)
-      alert('خطا در به‌روزرسانی گروهی')
+    } catch (err) {
+      console.error('Error in bulk update:', err)
+      error('خطا در به‌روزرسانی گروهی')
     } finally {
       setSaving(false)
     }
@@ -275,11 +289,12 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
           )
         )
         
+        info('همه‌ی حضورها پاک شدند')
         await fetchAttendanceStats()
       }
-    } catch (error) {
-      console.error('Error clearing attendance:', error)
-      alert('خطا در پاک کردن حضور و غیاب')
+    } catch (err) {
+      console.error('Error clearing attendance:', err)
+      error('خطا در پاک کردن حضور و غیاب')
     } finally {
       setSaving(false)
     }
@@ -295,15 +310,22 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
         const url = window.URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = `attendance-${selectedDate}.xlsx`
+        
+        // Enhanced filename with Persian date and class name
+        const persianDate = englishToPersianNumbers(selectedDate.replace(/-/g, '/'))
+        const className = classFilter !== 'all' ? classes.find(c => c.classId.toString() === classFilter)?.className : 'همه-کلاس‌ها'
+        a.download = `حضور-غیاب-${persianDate}-${className || ''}.xlsx`
+        
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
         window.URL.revokeObjectURL(url)
+        
+        success('فایل اکسل با موفقیت دانلود شد')
       }
-    } catch (error) {
-      console.error('Error exporting to Excel:', error)
-      alert('خطا در خروجی گیری فایل اکسل')
+    } catch (err) {
+      console.error('Error exporting to Excel:', err)
+      error('خطا در خروجی گیری فایل اکسل')
     }
   }
 
@@ -373,13 +395,16 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
   const getStatusBadge = (status: string | null | undefined) => {
     switch (status) {
       case 'PRESENT':
-        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">حاضر</span>
+        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">حاضر</span>
       case 'ABSENT':
-        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">غایب</span>
+        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-500 text-white">غایب</span>
       case 'LATE':
-        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">تأخیر</span>
+        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 gap-1">
+          <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+          تأخیر
+        </span>
       case 'EXCUSED':
-        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">مرخصی</span>
+        return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">مرخصی</span>
       default:
         return <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">ثبت نشده</span>
     }
@@ -409,8 +434,8 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
     <div className="space-y-6">
       {/* Stats Cards */}
       {attendanceStats && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-green-50 rounded-lg p-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-green-50 rounded-lg p-4 shadow-lg border border-green-200">
             <div className="flex items-center">
               <CheckCircleIcon className="h-8 w-8 text-green-600" />
               <div className="mr-4">
@@ -422,7 +447,7 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
             </div>
           </div>
           
-          <div className="bg-red-50 rounded-lg p-4">
+          <div className="bg-red-50 rounded-lg p-4 shadow-lg border border-red-200">
             <div className="flex items-center">
               <XCircleIcon className="h-8 w-8 text-red-600" />
               <div className="mr-4">
@@ -434,7 +459,7 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
             </div>
           </div>
           
-          <div className="bg-yellow-50 rounded-lg p-4">
+          <div className="bg-yellow-50 rounded-lg p-4 shadow-lg border border-yellow-200">
             <div className="flex items-center">
               <ClockIcon className="h-8 w-8 text-yellow-600" />
               <div className="mr-4">
@@ -446,13 +471,13 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
             </div>
           </div>
           
-          <div className="bg-blue-50 rounded-lg p-4">
+          <div className="bg-blue-50 rounded-lg p-4 shadow-lg border border-blue-200">
             <div className="flex items-center">
-              <ChartBarIcon className="h-8 w-8 text-blue-600" />
+              <ExclamationTriangleIcon className="h-8 w-8 text-blue-600" />
               <div className="mr-4">
-                <p className="text-sm font-medium text-blue-600">نرخ حضور</p>
+                <p className="text-sm font-medium text-blue-600">مرخصی</p>
                 <p className="text-2xl font-bold text-blue-900">
-                  {englishToPersianNumbers(Math.round(attendanceStats.attendanceRate))}%
+                  {englishToPersianNumbers(attendanceStats.excusedToday || 0)}
                 </p>
               </div>
             </div>
@@ -461,8 +486,21 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
       )}
 
       {/* Filters */}
-      <div className="bg-white rounded-xl card-shadow border border-gray-200 p-4">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-4">
+        {/* Mobile Filter Toggle */}
+        <div className="flex items-center justify-between md:hidden mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">فیلترها و جستجو</h3>
+          <button 
+            className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+            onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+          >
+            <Bars3Icon className="h-5 w-5 inline ml-1" />
+            {mobileFiltersOpen ? 'بستن' : 'باز کردن'}
+          </button>
+        </div>
+
+        {/* Filters Grid */}
+        <div className={`grid grid-cols-1 md:grid-cols-5 gap-4 ${mobileFiltersOpen ? 'block' : 'hidden md:grid'}`}>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">تاریخ</label>
             <div className="relative">
@@ -545,39 +583,41 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
           const unmarkedCount = classData.students.filter(s => !s.attendanceStatus).length
           
           return (
-            <div key={classData.classId} className="bg-white rounded-xl card-shadow border border-gray-200">
+            <div key={classData.classId} className="bg-white rounded-xl shadow-xl border border-gray-200">
               {/* Class Header */}
               <div 
-                className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
+                className="p-4 cursor-pointer hover:bg-gray-50 transition-colors"
                 onClick={() => toggleClassExpansion(classData.classId)}
               >
-                <div className="flex items-center gap-4">
-                  <div className={`p-2 rounded-lg ${isExpanded ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                    <UserGroupIcon className={`h-6 w-6 ${isExpanded ? 'text-blue-600' : 'text-gray-600'}`} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{classData.className}</h3>
-                    <p className="text-sm text-gray-600">معلم: {classData.teacherName}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="text-left">
-                    <p className="text-sm font-medium text-gray-900">
-                      {englishToPersianNumbers(classData.totalStudents)} دانش‌آموز
-                    </p>
-                    {unmarkedCount > 0 && (
-                      <p className="text-sm text-red-600">
-                        {englishToPersianNumbers(unmarkedCount)} ثبت نشده
-                      </p>
-                    )}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`p-2 rounded-lg ${isExpanded ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                      <UserGroupIcon className={`h-6 w-6 ${isExpanded ? 'text-blue-600' : 'text-gray-600'}`} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">{classData.className}</h3>
+                      <p className="text-sm text-gray-600">معلم: {classData.teacherName}</p>
+                    </div>
                   </div>
                   
-                  {isExpanded ? (
-                    <ChevronUpIcon className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <ChevronDownIcon className="h-5 w-5 text-gray-400" />
-                  )}
+                  <div className="flex items-center gap-4">
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-gray-900">
+                        {englishToPersianNumbers(classData.totalStudents)} دانش‌آموز
+                      </p>
+                      {unmarkedCount > 0 && (
+                        <p className="text-sm text-red-600">
+                          {englishToPersianNumbers(unmarkedCount)} ثبت نشده
+                        </p>
+                      )}
+                    </div>
+                    
+                    {isExpanded ? (
+                      <ChevronUpIcon className="h-5 w-5 text-gray-400" />
+                    ) : (
+                      <ChevronDownIcon className="h-5 w-5 text-gray-400" />
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -586,31 +626,31 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
                 <div className="border-t border-gray-200">
                   {/* Batch Actions */}
                   <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="text-sm font-medium text-gray-700">عملیات گروهی:</span>
                         <button
                           onClick={() => markAllPresent(classData.classId)}
                           disabled={saving}
-                          className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-green-100 text-green-800 hover:bg-green-200 transition-colors disabled:opacity-50"
+                          className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-green-100 text-green-800 hover:bg-green-200 transition-colors disabled:opacity-50 gap-1"
                         >
-                          <CheckIcon className="h-4 w-4 ml-1" />
+                          <CheckIcon className="h-4 w-4" />
                           همه حاضر
                         </button>
                         <button
                           onClick={() => markAllAbsent(classData.classId)}
                           disabled={saving}
-                          className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-red-100 text-red-800 hover:bg-red-200 transition-colors disabled:opacity-50"
+                          className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-red-100 text-red-800 hover:bg-red-200 transition-colors disabled:opacity-50 gap-1"
                         >
-                          <XMarkIcon className="h-4 w-4 ml-1" />
+                          <XMarkIcon className="h-4 w-4" />
                           همه غایب
                         </button>
                         <button
                           onClick={() => clearAllAttendance(classData.classId)}
                           disabled={saving}
-                          className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors disabled:opacity-50"
+                          className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors disabled:opacity-50 gap-1"
                         >
-                          <ArrowPathIcon className="h-4 w-4 ml-1" />
+                          <ArrowPathIcon className="h-4 w-4" />
                           پاک کردن
                         </button>
                       </div>
@@ -625,22 +665,14 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
                   </div>
 
                   {/* Students Table */}
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto max-h-96">
                     <table className="min-w-full">
-                      <thead className="bg-gray-50">
+                      <thead className="sticky top-0 z-10 bg-gray-50">
                         <tr>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            نام دانش‌آموز
-                          </th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            کد ملی
-                          </th>
-                          <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            وضعیت حضور
-                          </th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            یادداشت
-                          </th>
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">نام دانش‌آموز</th>
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">کد ملی</th>
+                          <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">وضعیت حضور</th>
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">یادداشت</th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
@@ -660,7 +692,7 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
                               {englishToPersianNumbers(student.nationalId)}
                             </td>
                             <td className="px-4 py-3">
-                              <div className="flex items-center justify-center gap-2">
+                              <div className="flex flex-col md:flex-row items-center justify-center gap-2">
                                 {/* Status Buttons */}
                                 <div className="flex items-center gap-1">
                                   <button
@@ -696,10 +728,21 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
                                   >
                                     <ClockIcon className="h-5 w-5" />
                                   </button>
+                                  <button
+                                    onClick={() => updateAttendance(student.id, classData.classId, 'EXCUSED', student.notes || '')}
+                                    className={`p-2 rounded-lg transition-colors ${
+                                      student.attendanceStatus === 'EXCUSED'
+                                        ? 'bg-blue-100 text-blue-600'
+                                        : 'bg-gray-100 text-gray-400 hover:bg-blue-50 hover:text-blue-600'
+                                    }`}
+                                    title="مرخصی"
+                                  >
+                                    <ExclamationTriangleIcon className="h-5 w-5" />
+                                  </button>
                                 </div>
                                 
                                 {/* Status Badge */}
-                                <div className="ml-2">
+                                <div className="mt-2 md:mt-0 md:ml-2">
                                   {getStatusBadge(student.attendanceStatus)}
                                 </div>
                               </div>
@@ -735,9 +778,11 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
                   </div>
 
                   {classData.students.length === 0 && (
-                    <div className="text-center py-8 text-gray-500">
-                      دانش‌آموزی با فیلترهای انتخاب شده یافت نشد
-                    </div>
+                    <tr>
+                      <td colSpan={4} className="text-center py-8 text-gray-500">
+                        دانش‌آموزی با فیلترهای انتخاب شده یافت نشد
+                      </td>
+                    </tr>
                   )}
                 </div>
               )}
@@ -747,10 +792,12 @@ export default function AttendanceDashboard({ initialDate }: AttendanceDashboard
       </div>
 
       {filteredClasses.length === 0 && !loading && (
-        <div className="text-center py-12">
-          <UserGroupIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">کلاسی یافت نشد</h3>
-          <p className="text-gray-600">فیلترهای خود را تغییر دهید یا تاریخ دیگری انتخاب کنید</p>
+        <div className="bg-white rounded-xl shadow-xl border border-gray-200">
+          <div className="p-8 text-center">
+            <UserGroupIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">کلاسی یافت نشد</h3>
+            <p className="text-gray-600">فیلترهای خود را تغییر دهید یا تاریخ دیگری انتخاب کنید</p>
+          </div>
         </div>
       )}
     </div>

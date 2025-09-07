@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { AppProvider } from '@/lib/contexts/AppContext'
+import { ToastProvider } from '@/lib/toast/ToastProvider'
 
 export const metadata: Metadata = {
   title: 'دبستان مهرآیین - سیستم اتوماسیون مدرسه',
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className="font-vazir bg-gray-50">
-        <AppProvider>
-          {children}
-        </AppProvider>
+        <ToastProvider>
+          <AppProvider>
+            {children}
+          </AppProvider>
+        </ToastProvider>
       </body>
     </html>
   )

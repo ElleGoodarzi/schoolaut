@@ -12,7 +12,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const { sidebarCollapsed } = useAppContext()
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-base-200">
       <ModularSidebar />
       
       {/* Main content area */}
