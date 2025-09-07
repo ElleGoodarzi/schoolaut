@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { validateStudentData } from '@/lib/validation/dataIntegrity'
 
 export async function GET(request: NextRequest) {
   try {
@@ -150,7 +151,7 @@ export async function POST(request: NextRequest) {
       address
     } = body
 
-    // Validation
+    // Basic field validation
     const errors: Record<string, string> = {}
 
     if (!firstName?.trim()) errors.firstName = 'نام الزامی است'
@@ -182,33 +183,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check for duplicate national ID
-    const existingStudent = await db.student.findUnique({
-      where: { nationalId }
+    // Generate studentId if not provided
+    const finalStudentId = studentId || `${new Date().getFullYear().toString().slice(-2)}${grade.toString().padStart(2, '0')}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`
+
+    // Comprehensive data integrity validation
+    const validation = await validateStudentData({
+      firstName,
+      lastName,
+      nationalId,
+      studentId: finalStudentId,
+      phone,
+      classId
     })
 
-    if (existingStudent) {
+    if (!validation.isValid) {
       return NextResponse.json(
         { 
           success: false, 
-          field: 'nationalId',
-          message: 'دانش‌آموزی با این کد ملی قبلاً ثبت شده است'
-        },
-        { status: 400 }
-      )
-    }
-
-    // Check if student ID is unique
-    const existingStudentId = await db.student.findUnique({
-      where: { studentId }
-    })
-
-    if (existingStudentId) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          field: 'studentId',
-          message: 'شماره دانش‌آموزی تکراری است'
+          errors: validation.errors,
+          warnings: validation.warnings,
+          message: 'اطلاعات تکراری یا نامعتبر'
         },
         { status: 400 }
       )
@@ -253,7 +247,7 @@ export async function POST(request: NextRequest) {
     // Create student
     const newStudent = await db.student.create({
       data: {
-        studentId,
+        studentId: finalStudentId,
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         fatherName: fatherName.trim(),

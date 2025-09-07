@@ -1,0 +1,326 @@
+{
+  "total": 31,
+  "working": 30,
+  "broken": 1,
+  "details": {
+    "/api/students": {
+      "status": "working",
+      "methods": {
+        "POST": {
+          "status": 201,
+          "working": true,
+          "success": true,
+          "message": "دانش‌آموز با موفقیت ایجاد شد"
+        }
+      }
+    },
+    "/api/students/1": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/students/count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/students/unified": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/students/1/full": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/students/1/class-history": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/teachers": {
+      "status": "working",
+      "methods": {
+        "POST": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "معلم با موفقیت ثبت شد"
+        }
+      }
+    },
+    "/api/teachers/active": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/classes": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/classes/available": {
+      "status": "broken",
+      "methods": {
+        "GET": {
+          "status": 400,
+          "working": false,
+          "success": false,
+          "message": "Grade parameter is required"
+        }
+      }
+    },
+    "/api/classes/active-students": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/classes/1": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/management/classes": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/management/classes/active": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/attendance/mark": {
+      "status": "working",
+      "methods": {
+        "POST": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "حضور و غیاب با موفقیت ثبت شد"
+        }
+      }
+    },
+    "/api/attendance/bulk": {
+      "status": "working",
+      "methods": {
+        "POST": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "1 رکورد حضور و غیاب با موفقیت به‌روزرسانی شد"
+        }
+      }
+    },
+    "/api/attendance/clear": {
+      "status": "working",
+      "methods": {
+        "POST": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "0 رکورد حضور و غیاب پاک شد"
+        }
+      }
+    },
+    "/api/attendance/stats/today": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/attendance/student/1": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/attendance/export": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/attendance/frequent-absentees": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/financial/overdue-count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/services/active-count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/services/meals/today-count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/circulars/recent": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/dashboard/refresh": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/system/health": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/export": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "OK"
+        }
+      }
+    },
+    "/api/seed": {
+      "status": "working",
+      "methods": {
+        "POST": {
+          "status": 200,
+          "working": true,
+          "success": true,
+          "message": "1 دانش‌آموز تستی ایجاد شد"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,783 @@
+{
+  "total": 31,
+  "working": 26,
+  "broken": 5,
+  "unimplemented": 0,
+  "details": {
+    "/api/attendance/bulk": {
+      "status": "broken",
+      "methods": {
+        "GET": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "POST": {
+          "status": 500,
+          "working": false,
+          "response": "Internal Server Error"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/attendance/clear": {
+      "status": "broken",
+      "methods": {
+        "GET": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "POST": {
+          "status": 500,
+          "working": false,
+          "response": "Internal Server Error"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 500,
+          "working": false,
+          "response": "Internal Server Error"
+        }
+      }
+    },
+    "/api/attendance/export": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/attendance/frequent-absentees": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/attendance/mark": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "POST": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/attendance/stats/today": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/attendance/student/1": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/circulars/recent": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/classes": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 500,
+          "working": false,
+          "response": "Internal Server Error"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/classes/1": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 500,
+          "working": false,
+          "response": "Internal Server Error"
+        },
+        "DELETE": {
+          "status": 400,
+          "working": false,
+          "response": "Bad Request"
+        }
+      }
+    },
+    "/api/classes/active-students": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/classes/available": {
+      "status": "broken",
+      "methods": {
+        "GET": {
+          "status": 400,
+          "working": false,
+          "response": "Bad Request"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/dashboard/refresh": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/export": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/financial/overdue-count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/management/classes": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 500,
+          "working": false,
+          "response": "Internal Server Error"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/management/classes/active": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/seed": {
+      "status": "broken",
+      "methods": {
+        "GET": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "POST": {
+          "status": 500,
+          "working": false,
+          "response": "Internal Server Error"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/services/active-count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/services/meals/today-count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/students": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 201,
+          "working": true,
+          "response": "OK"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/students/1": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/students/1/assign-class": {
+      "status": "broken",
+      "methods": {
+        "GET": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "POST": {
+          "status": 400,
+          "working": false,
+          "response": "Bad Request"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/students/1/class-history": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/students/1/full": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/students/count": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/students/unified": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/system/health": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/teachers": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/teachers/active": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    },
+    "/api/test/endpoints": {
+      "status": "working",
+      "methods": {
+        "GET": {
+          "status": 200,
+          "working": true,
+          "response": "OK"
+        },
+        "POST": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "PUT": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        },
+        "DELETE": {
+          "status": 405,
+          "working": false,
+          "response": "Method Not Allowed"
+        }
+      }
+    }
+  }
+}

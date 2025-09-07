@@ -1,0 +1,104 @@
+{
+  "timestamp": "2025-09-07T05:43:45.428Z",
+  "totalQueries": 7,
+  "successful": 6,
+  "failed": 1,
+  "benchmarks": [
+    {
+      "name": "Students by Grade",
+      "description": "Tests grade index performance",
+      "endpoint": "/api/students?grade=1",
+      "iterations": 5,
+      "avgTime": 20.433400199999998,
+      "minTime": 17.898792000000014,
+      "maxTime": 25.388124999999974,
+      "times": [
+        20.602958999999984,
+        25.388124999999974,
+        18.821957999999995,
+        17.898792000000014,
+        19.455167000000017
+      ]
+    },
+    {
+      "name": "Attendance by Date",
+      "description": "Tests date index performance",
+      "endpoint": "/api/attendance/stats/today?date=2025-01-06",
+      "iterations": 5,
+      "avgTime": 15.525175200000012,
+      "minTime": 12.47866700000003,
+      "maxTime": 23.316791999999992,
+      "times": [
+        23.316791999999992,
+        12.797417000000024,
+        12.47866700000003,
+        14.383792000000028,
+        14.649207999999987
+      ]
+    },
+    {
+      "name": "Class with Students",
+      "description": "Tests classId index performance",
+      "endpoint": "/api/classes/active-students?classId=1",
+      "iterations": 5,
+      "avgTime": 16.41965,
+      "minTime": 12.817999999999984,
+      "maxTime": 23.002208999999993,
+      "times": [
+        23.002208999999993,
+        16.546375000000012,
+        15.062000000000012,
+        14.669666000000007,
+        12.817999999999984
+      ]
+    },
+    {
+      "name": "Financial Overdue",
+      "description": "Tests payment status index performance",
+      "endpoint": "/api/financial/overdue-count",
+      "iterations": 5,
+      "avgTime": 16.015366799999992,
+      "minTime": 11.547416999999996,
+      "maxTime": 20.939874999999972,
+      "times": [
+        20.939874999999972,
+        17.487167,
+        15.927999999999997,
+        14.174374999999998,
+        11.547416999999996
+      ]
+    },
+    {
+      "name": "Student Full Profile",
+      "description": "Tests complex join performance",
+      "endpoint": "/api/students/1/full",
+      "iterations": 5,
+      "avgTime": 17.316574800000023,
+      "minTime": 14.243708000000083,
+      "maxTime": 24.46854099999996,
+      "times": [
+        24.46854099999996,
+        17.16970800000007,
+        15.725542000000019,
+        14.975374999999985,
+        14.243708000000083
+      ]
+    },
+    {
+      "name": "Export Students",
+      "description": "Tests large data export performance",
+      "endpoint": "/api/export?type=students&format=json&grade=1",
+      "iterations": 5,
+      "avgTime": 39.406175000000005,
+      "minTime": 14.020667000000003,
+      "maxTime": 138.62129199999993,
+      "times": [
+        138.62129199999993,
+        14.139042000000018,
+        15.13858300000004,
+        15.111291000000051,
+        14.020667000000003
+      ]
+    }
+  ]
+}

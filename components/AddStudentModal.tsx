@@ -11,6 +11,17 @@ import {
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
 
+interface ValidationError {
+  field: string
+  message: string
+}
+
+interface ValidationResult {
+  isValid: boolean
+  errors: string[]
+  warnings?: string[]
+}
+
 interface AddStudentModalProps {
   isOpen: boolean
   onClose: () => void
@@ -59,6 +70,8 @@ export default function AddStudentModal({ isOpen, onClose, onSuccess }: AddStude
   const [loading, setLoading] = useState(false)
   const [loadingClasses, setLoadingClasses] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [warnings, setWarnings] = useState<string[]>([])
+  const [validationLoading, setValidationLoading] = useState(false)
 
   // Fetch available classes when grade changes
   useEffect(() => {
@@ -66,6 +79,65 @@ export default function AddStudentModal({ isOpen, onClose, onSuccess }: AddStude
       fetchAvailableClasses(formData.grade)
     }
   }, [formData.grade])
+
+  // Real-time validation with debounce
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (formData.nationalId && formData.nationalId.length === 10) {
+        validateRealTime()
+      }
+    }, 500)
+
+    return () => clearTimeout(timeoutId)
+  }, [formData.nationalId, formData.firstName, formData.lastName, formData.phone])
+
+  const validateRealTime = async () => {
+    if (!formData.nationalId || !formData.firstName || !formData.lastName) return
+    
+    try {
+      setValidationLoading(true)
+      const response = await fetch('/api/validation/student', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          nationalId: formData.nationalId,
+          studentId: generateStudentId(),
+          phone: formData.phone,
+          classId: formData.classId
+        })
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        if (!result.isValid) {
+          const fieldErrors: Record<string, string> = {}
+          result.errors.forEach((error: string) => {
+            if (error.includes('کد ملی')) fieldErrors.nationalId = error
+            else if (error.includes('شماره تلفن')) fieldErrors.phone = error
+            else if (error.includes('نام')) fieldErrors.firstName = error
+          })
+          setErrors(prev => ({ ...prev, ...fieldErrors }))
+        } else {
+          // Clear validation errors
+          setErrors(prev => {
+            const newErrors = { ...prev }
+            delete newErrors.nationalId
+            delete newErrors.phone
+            delete newErrors.firstName
+            return newErrors
+          })
+        }
+        setWarnings(result.warnings || [])
+      }
+    } catch (error) {
+      console.error('Real-time validation error:', error)
+    } finally {
+      setValidationLoading(false)
+    }
+  }
+
 
   const fetchAvailableClasses = async (grade: number) => {
     try {

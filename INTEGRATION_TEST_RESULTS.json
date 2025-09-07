@@ -1,0 +1,116 @@
+{
+  "timestamp": "2025-09-07T05:45:38.883Z",
+  "tests": [
+    {
+      "name": "Create Student",
+      "status": "FAILED",
+      "duration": null,
+      "error": "400: ظرفیت کلاس تکمیل است"
+    },
+    {
+      "name": "Get Student List",
+      "status": "PASSED",
+      "duration": 27,
+      "error": null
+    },
+    {
+      "name": "Create Teacher",
+      "status": "PASSED",
+      "duration": 39,
+      "error": null
+    },
+    {
+      "name": "Get Teacher List",
+      "status": "PASSED",
+      "duration": 75,
+      "error": null
+    },
+    {
+      "name": "Get Class List",
+      "status": "PASSED",
+      "duration": 44,
+      "error": null
+    },
+    {
+      "name": "Get Class with Students",
+      "status": "PASSED",
+      "duration": 22,
+      "error": null
+    },
+    {
+      "name": "Get Individual Class",
+      "status": "PASSED",
+      "duration": 19,
+      "error": null
+    },
+    {
+      "name": "Mark Individual Attendance",
+      "status": "PASSED",
+      "duration": 15,
+      "error": null
+    },
+    {
+      "name": "Bulk Attendance Update",
+      "status": "PASSED",
+      "duration": 21,
+      "error": null
+    },
+    {
+      "name": "Get Attendance Statistics",
+      "status": "PASSED",
+      "duration": 12,
+      "error": null
+    },
+    {
+      "name": "Export Attendance Data",
+      "status": "FAILED",
+      "duration": null,
+      "error": "Unexpected token 'P', \"PK\u0003\u0004\u0014\u0000\u0000\u0000\u0000\u0000\"... is not valid JSON"
+    },
+    {
+      "name": "Get Overdue Count",
+      "status": "FAILED",
+      "duration": null,
+      "error": "Overdue count retrieval failed"
+    },
+    {
+      "name": "Export Students",
+      "status": "PASSED",
+      "duration": 40,
+      "error": null
+    },
+    {
+      "name": "Export Teachers",
+      "status": "PASSED",
+      "duration": 12,
+      "error": null
+    },
+    {
+      "name": "Export Classes",
+      "status": "PASSED",
+      "duration": 12,
+      "error": null
+    },
+    {
+      "name": "Export Attendance",
+      "status": "PASSED",
+      "duration": 12,
+      "error": null
+    },
+    {
+      "name": "Export Financial",
+      "status": "PASSED",
+      "duration": 39,
+      "error": null
+    },
+    {
+      "name": "System Health Check",
+      "status": "PASSED",
+      "duration": 26,
+      "error": null
+    }
+  ],
+  "passed": 15,
+  "failed": 3,
+  "total": 18
+}

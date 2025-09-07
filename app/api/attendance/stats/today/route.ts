@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db as prisma } from '@/lib/db'
 import { getTodayDate } from '@/lib/utils'
 
 export async function GET(request: NextRequest) {

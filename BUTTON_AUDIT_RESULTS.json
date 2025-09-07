@@ -1,0 +1,1852 @@
+{
+  "total": 101,
+  "working": 92,
+  "broken": 7,
+  "disabled": 2,
+  "placeholder": 0,
+  "details": {
+    "app/attendance/select-class/page.tsx:186": {
+      "text": "Unknown",
+      "status": "broken",
+      "hasHandler": false,
+      "isDisabled": false
+    },
+    "app/attendance/select-class/page.tsx:205": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/circulars/page.tsx:154": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/circulars/page.tsx:229": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/circulars/page.tsx:306": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/circulars/page.tsx:312": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/circulars/page.tsx:385": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/circulars/page.tsx:395": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/communications/page.tsx:46": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/evaluation/page.tsx:80": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/financial/enhanced/page.tsx:135": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/financial/enhanced/page.tsx:141": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/financial/enhanced/page.tsx:217": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/financial/page.tsx:177": {
+      "text": "Unknown",
+      "status": "broken",
+      "hasHandler": false,
+      "isDisabled": false
+    },
+    "app/financial/page.tsx:190": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/financial/page.tsx:198": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/financial/page.tsx:206": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/financial/page.tsx:214": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:96": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:121": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:148": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:155": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:175": {
+      "text": "Unknown",
+      "status": "broken",
+      "hasHandler": false,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:187": {
+      "text": "Unknown",
+      "status": "broken",
+      "hasHandler": false,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:190": {
+      "text": "Unknown",
+      "status": "broken",
+      "hasHandler": false,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:221": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:246": {
+      "text": "Unknown",
+      "status": "broken",
+      "hasHandler": false,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:249": {
+      "text": "Unknown",
+      "status": "broken",
+      "hasHandler": false,
+      "isDisabled": false
+    },
+    "app/management/page.tsx:283": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:225": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:233": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:294": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:384": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:391": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:398": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:415": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:429": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/page.tsx:438": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/people/students/page.tsx:152": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/people/students/page.tsx:168": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/people/students/page.tsx:262": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/people/students/page.tsx:292": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/people/students/page.tsx:321": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/rewards/page.tsx:42": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/services/page.tsx:125": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/services/page.tsx:186": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/services/page.tsx:246": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/services/page.tsx:289": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/services/page.tsx:342": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/surveys/page.tsx:42": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/system/page.tsx:46": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "app/teachers/page.tsx:85": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/AddStudentModal.tsx:257": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/AddStudentModal.tsx:500": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/AddStudentModal.tsx:508": {
+      "text": "Unknown",
+      "status": "disabled",
+      "hasHandler": false,
+      "isDisabled": true
+    },
+    "components/ModularSidebar.tsx:75": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/ModularSidebar.tsx:196": {
+      "text": "{category.title}",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/ModularSidebar.tsx:251": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/ModularSidebar.tsx:321": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/QuickAccessPanel.tsx:143": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/QuickAccessPanel.tsx:175": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/QuickAccessPanel.tsx:204": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/QuickAccessPanel.tsx:236": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/SmartAlertCard.tsx:129": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/SmartAlertCard.tsx:178": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/SmartAlertCard.tsx:204": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/SmartAlertCard.tsx:212": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/SmartBreadcrumbs.tsx:243": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/AttendanceDashboard.tsx:493": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/AttendanceDashboard.tsx:568": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/AttendanceDashboard.tsx:632": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": true
+    },
+    "components/attendance/AttendanceDashboard.tsx:640": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": true
+    },
+    "components/attendance/AttendanceDashboard.tsx:648": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": true
+    },
+    "components/attendance/AttendanceDashboard.tsx:698": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/AttendanceDashboard.tsx:709": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/AttendanceDashboard.tsx:720": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/AttendanceDashboard.tsx:731": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:306": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:384": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:426": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:439": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:446": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:453": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:462": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": true
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:522": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:533": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:544": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:555": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/attendance/ClassAttendanceMarking.tsx:600": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": true
+    },
+    "components/modules/FinancialModule.tsx:281": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/FinancialModule.tsx:333": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/FinancialModule.tsx:339": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/ServicesModule.tsx:256": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/ServicesModule.tsx:262": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/ServicesModule.tsx:286": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/ServicesModule.tsx:292": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/StudentProfileTabs.tsx:592": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/StudentProfileTabs.tsx:678": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/StudentProfileTabs.tsx:748": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    },
+    "components/modules/StudentProfileTabs.tsx:755": {
+      "text": "Unknown",
+      "status": "disabled",
+      "hasHandler": false,
+      "isDisabled": true
+    },
+    "components/shared/UniversalCard.tsx:193": {
+      "text": "Unknown",
+      "status": "working",
+      "hasHandler": true,
+      "isDisabled": false
+    }
+  },
+  "byFile": {
+    "app/attendance/select-class/page.tsx": {
+      "total": 2,
+      "working": 1,
+      "broken": 1,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/attendance/select-class/page.tsx",
+          "line": 186,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "broken",
+          "code": "<button className=\"w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors group-hover:bg-blue-700\">"
+        },
+        {
+          "file": "app/attendance/select-class/page.tsx",
+          "line": 205,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/circulars/page.tsx": {
+      "total": 6,
+      "working": 6,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/circulars/page.tsx",
+          "line": 154,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/circulars/page.tsx",
+          "line": 229,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/circulars/page.tsx",
+          "line": 306,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/circulars/page.tsx",
+          "line": 312,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/circulars/page.tsx",
+          "line": 385,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/circulars/page.tsx",
+          "line": 395,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/communications/page.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/communications/page.tsx",
+          "line": 46,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/evaluation/page.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/evaluation/page.tsx",
+          "line": 80,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/financial/enhanced/page.tsx": {
+      "total": 3,
+      "working": 3,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/financial/enhanced/page.tsx",
+          "line": 135,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/financial/enhanced/page.tsx",
+          "line": 141,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/financial/enhanced/page.tsx",
+          "line": 217,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/financial/page.tsx": {
+      "total": 5,
+      "working": 4,
+      "broken": 1,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/financial/page.tsx",
+          "line": 177,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "broken",
+          "code": "<button className=\"text-sm text-blue-600 hover:text-blue-800 transition-colors\">"
+        },
+        {
+          "file": "app/financial/page.tsx",
+          "line": 190,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/financial/page.tsx",
+          "line": 198,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/financial/page.tsx",
+          "line": 206,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/financial/page.tsx",
+          "line": 214,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/management/page.tsx": {
+      "total": 11,
+      "working": 6,
+      "broken": 5,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/management/page.tsx",
+          "line": 96,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 121,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 148,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 155,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 175,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "broken",
+          "code": "<button className=\"bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors\">"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 187,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "broken",
+          "code": "<button className=\"p-2 text-gray-400 hover:text-blue-600 transition-colors\">"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 190,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "broken",
+          "code": "<button className=\"p-2 text-gray-400 hover:text-red-600 transition-colors\">"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 221,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 246,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "broken",
+          "code": "<button className=\"p-2 text-gray-400 hover:text-blue-600 transition-colors\">"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 249,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "broken",
+          "code": "<button className=\"p-2 text-gray-400 hover:text-red-600 transition-colors\">"
+        },
+        {
+          "file": "app/management/page.tsx",
+          "line": 283,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/page.tsx": {
+      "total": 9,
+      "working": 9,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/page.tsx",
+          "line": 225,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 233,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 294,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 384,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 391,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 398,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 415,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 429,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/page.tsx",
+          "line": 438,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/people/students/page.tsx": {
+      "total": 5,
+      "working": 5,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/people/students/page.tsx",
+          "line": 152,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/people/students/page.tsx",
+          "line": 168,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/people/students/page.tsx",
+          "line": 262,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/people/students/page.tsx",
+          "line": 292,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/people/students/page.tsx",
+          "line": 321,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/rewards/page.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/rewards/page.tsx",
+          "line": 42,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/services/page.tsx": {
+      "total": 5,
+      "working": 5,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/services/page.tsx",
+          "line": 125,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/services/page.tsx",
+          "line": 186,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/services/page.tsx",
+          "line": 246,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/services/page.tsx",
+          "line": 289,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "app/services/page.tsx",
+          "line": 342,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/surveys/page.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/surveys/page.tsx",
+          "line": 42,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/system/page.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/system/page.tsx",
+          "line": 46,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "app/teachers/page.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "app/teachers/page.tsx",
+          "line": 85,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/AddStudentModal.tsx": {
+      "total": 3,
+      "working": 2,
+      "broken": 0,
+      "disabled": 1,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/AddStudentModal.tsx",
+          "line": 257,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/AddStudentModal.tsx",
+          "line": 500,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/AddStudentModal.tsx",
+          "line": 508,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": true,
+          "status": "disabled",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/ModularSidebar.tsx": {
+      "total": 4,
+      "working": 4,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/ModularSidebar.tsx",
+          "line": 75,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/ModularSidebar.tsx",
+          "line": 196,
+          "text": "{category.title}",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/ModularSidebar.tsx",
+          "line": 251,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/ModularSidebar.tsx",
+          "line": 321,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/QuickAccessPanel.tsx": {
+      "total": 4,
+      "working": 4,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/QuickAccessPanel.tsx",
+          "line": 143,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/QuickAccessPanel.tsx",
+          "line": 175,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/QuickAccessPanel.tsx",
+          "line": 204,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/QuickAccessPanel.tsx",
+          "line": 236,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/SmartAlertCard.tsx": {
+      "total": 4,
+      "working": 4,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/SmartAlertCard.tsx",
+          "line": 129,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/SmartAlertCard.tsx",
+          "line": 178,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/SmartAlertCard.tsx",
+          "line": 204,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/SmartAlertCard.tsx",
+          "line": 212,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/SmartBreadcrumbs.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/SmartBreadcrumbs.tsx",
+          "line": 243,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/attendance/AttendanceDashboard.tsx": {
+      "total": 9,
+      "working": 9,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 493,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 568,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 632,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": true,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 640,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": true,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 648,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": true,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 698,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 709,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 720,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/AttendanceDashboard.tsx",
+          "line": 731,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/attendance/ClassAttendanceMarking.tsx": {
+      "total": 12,
+      "working": 12,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 306,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 384,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 426,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 439,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 446,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 453,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 462,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": true,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 522,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 533,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 544,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 555,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/attendance/ClassAttendanceMarking.tsx",
+          "line": 600,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": true,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/modules/FinancialModule.tsx": {
+      "total": 3,
+      "working": 3,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/modules/FinancialModule.tsx",
+          "line": 281,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/FinancialModule.tsx",
+          "line": 333,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/FinancialModule.tsx",
+          "line": 339,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/modules/ServicesModule.tsx": {
+      "total": 4,
+      "working": 4,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/modules/ServicesModule.tsx",
+          "line": 256,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/ServicesModule.tsx",
+          "line": 262,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/ServicesModule.tsx",
+          "line": 286,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/ServicesModule.tsx",
+          "line": 292,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/modules/StudentProfileTabs.tsx": {
+      "total": 4,
+      "working": 3,
+      "broken": 0,
+      "disabled": 1,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/modules/StudentProfileTabs.tsx",
+          "line": 592,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/StudentProfileTabs.tsx",
+          "line": 678,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/StudentProfileTabs.tsx",
+          "line": 748,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        },
+        {
+          "file": "components/modules/StudentProfileTabs.tsx",
+          "line": 755,
+          "text": "Unknown",
+          "hasOnClick": false,
+          "hasHref": false,
+          "isDisabled": true,
+          "status": "disabled",
+          "code": "<button"
+        }
+      ]
+    },
+    "components/shared/UniversalCard.tsx": {
+      "total": 1,
+      "working": 1,
+      "broken": 0,
+      "disabled": 0,
+      "placeholder": 0,
+      "buttons": [
+        {
+          "file": "components/shared/UniversalCard.tsx",
+          "line": 193,
+          "text": "Unknown",
+          "hasOnClick": true,
+          "hasHref": false,
+          "isDisabled": false,
+          "status": "working",
+          "code": "<button"
+        }
+      ]
+    }
+  }
+}

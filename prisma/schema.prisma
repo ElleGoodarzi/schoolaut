@@ -18,15 +18,22 @@ model Student {
   grade            Int
   section          String
   classId          Int
-  phone            String?
+  phone            String?                  @unique
+  email            String?                  @unique // Add email field for better contact management
   address          String?
   enrollmentDate   DateTime                 @default(now())
   isActive         Boolean                  @default(true)
   attendances      Attendance[]
   payments         Payment[]
   classAssignments StudentClassAssignment[]
-  class            Class                    @relation(fields: [classId], references: [id])
+  class            Class                    @relation(fields: [classId], references: [id], onDelete: Cascade)
 
+  // Prevent duplicate students in same class
+  @@unique([firstName, lastName, classId], name: "unique_student_per_class")
+  @@index([grade])
+  @@index([classId])
+  @@index([isActive])
+  @@index([firstName, lastName])
   @@map("students")
 }
 
@@ -36,12 +43,14 @@ model Teacher {
   firstName  String
   lastName   String
   nationalId String   @unique
-  phone      String
-  email      String?
-  hireDate   DateTime
+  phone      String   @unique // Ensure unique phone numbers
+  email      String?  @unique // Ensure unique email addresses
+  hireDate   DateTime @default(now())
   isActive   Boolean  @default(true)
   classes    Class[]
 
+  // Prevent duplicate teacher names
+  @@unique([firstName, lastName], name: "unique_teacher_name")
   @@map("teachers")
 }
 
@@ -54,7 +63,7 @@ model Class {
   isActive         Boolean                  @default(true)
   attendances      Attendance[]
   classAssignments StudentClassAssignment[]
-  teacher          Teacher                  @relation(fields: [teacherId], references: [id])
+  teacher          Teacher                  @relation(fields: [teacherId], references: [id], onDelete: Restrict)
   students         Student[]
 
   @@unique([grade, section])
@@ -66,28 +75,34 @@ model Attendance {
   studentId Int
   classId   Int
   date      DateTime
-  status    String
+  status    String   // PRESENT, ABSENT, LATE, EXCUSED
   notes     String?
   createdAt DateTime @default(now())
-  class     Class    @relation(fields: [classId], references: [id])
-  student   Student  @relation(fields: [studentId], references: [id])
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, date])
+  @@index([date])
+  @@index([classId, date])
+  @@index([status])
   @@map("attendances")
 }
 
 model Payment {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   studentId   Int
   amount      Float
   dueDate     DateTime
   paidDate    DateTime?
-  status      String
-  type        String
+  status      String   @default("PENDING") // PENDING, PAID, OVERDUE, CANCELLED
+  type        String   // TUITION, MEAL, TRANSPORT, ACTIVITY, OTHER
   description String?
-  createdAt   DateTime  @default(now())
-  student     Student   @relation(fields: [studentId], references: [id])
+  createdAt   DateTime @default(now())
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
+  @@index([studentId])
+  @@index([dueDate])
+  @@index([status])
   @@map("payments")
 }
 
@@ -125,8 +140,8 @@ model StudentClassAssignment {
   isActive         Boolean   @default(true)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
-  student          Student   @relation(fields: [studentId], references: [id])
-  class            Class     @relation(fields: [classId], references: [id])
+  student          Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class            Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
 
   @@unique([studentId, classId, startDate])
   @@map("student_class_assignments")
