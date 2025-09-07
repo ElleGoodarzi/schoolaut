@@ -10,6 +10,7 @@ import {
   UserGroupIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface Teacher {
   id: number
@@ -31,6 +32,7 @@ interface Teacher {
 export default function Teachers() {
   const [teachers, setTeachers] = useState<Teacher[]>([])
   const [loading, setLoading] = useState(true)
+  const { info } = useToast()
 
   useEffect(() => {
     fetchTeachers()
@@ -80,7 +82,10 @@ export default function Teachers() {
       <div className="fade-in">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-900">معلمان</h1>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          <button 
+            onClick={() => info('قابلیت افزودن معلم در دست توسعه است')}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          >
             <PlusIcon className="h-5 w-5" />
             افزودن معلم
           </button>

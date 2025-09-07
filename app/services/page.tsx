@@ -12,6 +12,7 @@ import {
   PlusIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface ServiceData {
   totalMealsToday: number
@@ -46,6 +47,7 @@ export default function Services() {
   const [students, setStudents] = useState<Student[]>([])
   const [activeTab, setActiveTab] = useState<'overview' | 'meals' | 'transport' | 'students'>('overview')
   const [loading, setLoading] = useState(true)
+  const { info, warning } = useToast()
 
   useEffect(() => {
     fetchServiceData()
@@ -120,7 +122,10 @@ export default function Services() {
       <div className="fade-in">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-900">سرویس و غذا</h1>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          <button 
+            onClick={() => info('قابلیت تخصیص سرویس در دست توسعه است')}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          >
             <PlusIcon className="h-5 w-5" />
             تخصیص سرویس جدید
           </button>
@@ -238,7 +243,10 @@ export default function Services() {
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-semibold text-gray-900">مدیریت برنامه غذایی</h2>
-                  <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm">
+                  <button 
+                    onClick={() => info('قابلیت مدیریت منو در دست توسعه است')}
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm"
+                  >
                     افزودن منو جدید
                   </button>
                 </div>
@@ -278,7 +286,10 @@ export default function Services() {
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-semibold text-gray-900">مدیریت سرویس رفت و آمد</h2>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">
+                  <button 
+                    onClick={() => info('قابلیت تعریف مسیر سرویس در دست توسعه است')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
+                  >
                     تعریف مسیر جدید
                   </button>
                 </div>
@@ -328,7 +339,10 @@ export default function Services() {
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-semibold text-gray-900">تخصیص سرویس به دانش‌آموزان</h2>
-                  <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm">
+                  <button 
+                    onClick={() => info('قابلیت تخصیص گروهی سرویس در دست توسعه است')}
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm"
+                  >
                     تخصیص گروهی
                   </button>
                 </div>

@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { db } from '@/lib/db'
 
 export async function GET(request: NextRequest) {
   try {
@@ -88,7 +86,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch students with dynamic includes
-    const students = await prisma.student.findMany({
+    const students = await db.student.findMany({
       where: whereClause,
       include: includeOptions,
       orderBy: [

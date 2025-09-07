@@ -10,6 +10,7 @@ import {
   UserIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface OverdueStudent {
   id: number
@@ -29,6 +30,7 @@ interface FinancialData {
 export default function Financial() {
   const [financialData, setFinancialData] = useState<FinancialData | null>(null)
   const [loading, setLoading] = useState(true)
+  const { info, warning } = useToast()
 
   useEffect(() => {
     fetchFinancialData()
@@ -185,22 +187,34 @@ export default function Financial() {
 
         {/* Quick Actions */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg text-center transition-colors">
+          <button 
+            onClick={() => info('قابلیت ثبت پرداخت در دست توسعه است')}
+            className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg text-center transition-colors"
+          >
             <CurrencyDollarIcon className="h-8 w-8 mx-auto mb-2" />
             <span className="block font-medium">ثبت پرداخت</span>
           </button>
           
-          <button className="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg text-center transition-colors">
+          <button 
+            onClick={() => info('قابلیت گزارش‌گیری پرداخت‌ها در دست توسعه است')}
+            className="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg text-center transition-colors"
+          >
             <CheckCircleIcon className="h-8 w-8 mx-auto mb-2" />
             <span className="block font-medium">گزارش پرداخت‌ها</span>
           </button>
           
-          <button className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg text-center transition-colors">
+          <button 
+            onClick={() => info('قابلیت یادآوری پرداخت در دست توسعه است')}
+            className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg text-center transition-colors"
+          >
             <ClockIcon className="h-8 w-8 mx-auto mb-2" />
             <span className="block font-medium">یادآوری پرداخت</span>
           </button>
           
-          <button className="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-lg text-center transition-colors">
+          <button 
+            onClick={() => info('قابلیت مدیریت شهریه در دست توسعه است')}
+            className="bg-gray-600 hover:bg-gray-700 text-white p-4 rounded-lg text-center transition-colors"
+          >
             <UserIcon className="h-8 w-8 mx-auto mb-2" />
             <span className="block font-medium">مدیریت شهریه</span>
           </button>

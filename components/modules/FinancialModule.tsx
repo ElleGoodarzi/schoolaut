@@ -9,6 +9,7 @@ import {
   DocumentTextIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface PaymentRecord {
   id: number
@@ -46,6 +47,7 @@ export default function FinancialModule({
   const [summary, setSummary] = useState<FinancialSummary | null>(null)
   const [loading, setLoading] = useState(true)
   const [showAllPayments, setShowAllPayments] = useState(false)
+  const { info } = useToast()
 
   useEffect(() => {
     fetchFinancialData()
@@ -328,10 +330,16 @@ export default function FinancialModule({
 
       {/* Quick Actions */}
       <div className="flex gap-3">
-        <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
+        <button 
+          onClick={() => info('ثبت پرداخت جدید در دست توسعه است')}
+          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+        >
           ثبت پرداخت جدید
         </button>
-        <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg text-sm font-medium transition-colors">
+        <button 
+          onClick={() => info('گزارش مالی در دست توسعه است')}
+          className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+        >
           گزارش مالی
         </button>
       </div>

@@ -21,7 +21,11 @@ export function persianToEnglishNumbers(str: string): string {
 }
 
 // Convert English numbers to Persian for display
-export function englishToPersianNumbers(str: string | number): string {
+export function englishToPersianNumbers(str: string | number | null | undefined): string {
+  if (str === null || str === undefined) {
+    return '۰'
+  }
+  
   const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
   const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹']
   

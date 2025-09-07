@@ -12,6 +12,7 @@ import {
   FunnelIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface Announcement {
   id: number
@@ -30,6 +31,7 @@ export default function Circulars() {
   const [filterPriority, setFilterPriority] = useState<string>('all')
   const [filterAudience, setFilterAudience] = useState<string>('all')
   const [loading, setLoading] = useState(true)
+  const { info, warning, success } = useToast()
 
   useEffect(() => {
     fetchAnnouncements()
@@ -301,10 +303,16 @@ export default function Circulars() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2 mr-4">
-                            <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            <button 
+                              onClick={() => info('ویرایش اطلاعیه در دست توسعه است')}
+                              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                            >
                               ویرایش
                             </button>
-                            <button className="text-red-600 hover:text-red-800 text-sm font-medium">
+                            <button 
+                              onClick={() => warning('حذف اطلاعیه در دست توسعه است')}
+                              className="text-red-600 hover:text-red-800 text-sm font-medium"
+                            >
                               حذف
                             </button>
                           </div>
@@ -376,12 +384,17 @@ export default function Circulars() {
                   <div className="flex gap-3">
                     <button
                       type="submit"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        success('انتشار اطلاعیه در دست توسعه است')
+                      }}
                       className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
                     >
                       انتشار اطلاعیه
                     </button>
                     <button
                       type="button"
+                      onClick={() => info('ذخیره پیش‌نویس در دست توسعه است')}
                       className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
                     >
                       ذخیره پیش‌نویس

@@ -8,6 +8,7 @@ import {
   UserIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface ServiceAssignment {
   id: number
@@ -39,6 +40,7 @@ export default function ServicesModule({
 }: ServicesModuleProps) {
   const [services, setServices] = useState<ServiceAssignment[]>([])
   const [loading, setLoading] = useState(true)
+  const { info, warning } = useToast()
 
   useEffect(() => {
     fetchServicesData()
@@ -251,14 +253,20 @@ export default function ServicesModule({
 
               {/* Action Buttons */}
               <div className="mt-4 pt-4 border-t border-gray-200 flex gap-2">
-                <button className="flex-1 bg-white hover:bg-gray-50 text-gray-700 py-2 px-3 rounded-md text-sm font-medium transition-colors border border-gray-200">
+                <button 
+                  onClick={() => info('ویرایش سرویس در دست توسعه است')}
+                  className="flex-1 bg-white hover:bg-gray-50 text-gray-700 py-2 px-3 rounded-md text-sm font-medium transition-colors border border-gray-200"
+                >
                   ویرایش
                 </button>
-                <button className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-                  service.isActive 
-                    ? 'bg-red-100 hover:bg-red-200 text-red-700'
-                    : 'bg-green-100 hover:bg-green-200 text-green-700'
-                }`}>
+                <button 
+                  onClick={() => info('تغییر وضعیت سرویس در دست توسعه است')}
+                  className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+                    service.isActive 
+                      ? 'bg-red-100 hover:bg-red-200 text-red-700'
+                      : 'bg-green-100 hover:bg-green-200 text-green-700'
+                  }`}
+                >
                   {service.isActive ? 'غیرفعال کردن' : 'فعال کردن'}
                 </button>
               </div>
@@ -275,10 +283,16 @@ export default function ServicesModule({
           سرویس غذا یا حمل و نقل جدیدی برای این دانش‌آموز اضافه کنید
         </p>
         <div className="flex gap-3 justify-center">
-          <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
+          <button 
+            onClick={() => info('افزودن سرویس غذا در دست توسعه است')}
+            className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+          >
             افزودن سرویس غذا
           </button>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
+          <button 
+            onClick={() => info('افزودن سرویس حمل و نقل در دست توسعه است')}
+            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+          >
             افزودن سرویس حمل و نقل
           </button>
         </div>

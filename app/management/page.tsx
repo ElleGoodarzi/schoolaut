@@ -12,6 +12,7 @@ import {
   ClockIcon
 } from '@heroicons/react/24/outline'
 import { englishToPersianNumbers } from '@/lib/utils'
+import { useToast } from '@/lib/toast/ToastProvider'
 
 interface Class {
   id: number
@@ -31,6 +32,7 @@ export default function ManagementPanel() {
   const [activeTab, setActiveTab] = useState('classes')
   const [classes, setClasses] = useState<Class[]>([])
   const [loading, setLoading] = useState(true)
+  const { info, warning } = useToast()
 
   useEffect(() => {
     if (activeTab === 'classes') {
@@ -143,10 +145,18 @@ export default function ManagementPanel() {
                           )}
                         </div>
                         <div className="flex items-center gap-2">
-                          <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
+                          <button 
+                            onClick={() => info('ویرایش سال تحصیلی در دست توسعه است')}
+                            className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                            title="ویرایش سال تحصیلی"
+                          >
                             <PencilIcon className="w-4 h-4" />
                           </button>
-                          <button className="p-2 text-gray-400 hover:text-red-600 transition-colors">
+                          <button 
+                            onClick={() => warning('حذف سال تحصیلی در دست توسعه است')}
+                            className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+                            title="حذف سال تحصیلی"
+                          >
                             <TrashIcon className="w-4 h-4" />
                           </button>
                         </div>
@@ -208,7 +218,10 @@ export default function ManagementPanel() {
               <div>
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-lg font-semibold text-gray-900">تقویم مدرسه (شمسی)</h2>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors">
+                  <button 
+                    onClick={() => info('افزودن رویداد تقویم در دست توسعه است')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
+                  >
                     <PlusIcon className="w-4 h-4" />
                     افزودن رویداد
                   </button>
@@ -267,7 +280,10 @@ export default function ManagementPanel() {
               <div>
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-lg font-semibold text-gray-900">مدیریت دسترسی‌ها</h2>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors">
+                  <button 
+                    onClick={() => info('تعریف نقش جدید در دست توسعه است')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
+                  >
                     <PlusIcon className="w-4 h-4" />
                     تعریف نقش جدید
                   </button>
