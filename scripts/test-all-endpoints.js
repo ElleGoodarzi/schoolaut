@@ -41,8 +41,8 @@ async function testEndpoint(endpoint) {
   const results = {};
   
   for (const method of methods) {
-    try {
-      const options = {
+  try {
+    const options = {
         method,
         headers: { 'Content-Type': 'application/json' }
       };
@@ -84,14 +84,14 @@ async function testEndpoint(endpoint) {
       const isSuccess = response.status < 400;
       
       results[method] = {
-        status: response.status,
+      status: response.status,
         working: isSuccess,
         response: isSuccess ? 'OK' : response.statusText
-      };
-    } catch (error) {
+    };
+  } catch (error) {
       results[method] = {
-        status: 'ERROR',
-        working: false,
+      status: 'ERROR',
+      working: false,
         response: error.message
       };
     }

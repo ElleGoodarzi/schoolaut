@@ -65,7 +65,7 @@ class IntegrationTestSuite {
 
   async runAllTests() {
     console.log('='.repeat(100));
-    console.log('🧪 COMPREHENSIVE INTEGRATION TEST SUITE');
+  console.log('🧪 COMPREHENSIVE INTEGRATION TEST SUITE');
     console.log('='.repeat(100));
     
     await this.testStudentCRUD();
@@ -88,15 +88,15 @@ class IntegrationTestSuite {
     
     // Test student creation
     await this.test('Create Student', async () => {
-      const studentData = {
+    const studentData = {
         studentId: 'INT_TEST_' + Date.now(),
-        firstName: 'تست',
+      firstName: 'تست',
         lastName: 'یکپارچگی',
-        fatherName: 'پدر تست',
+      fatherName: 'پدر تست',
         nationalId: Date.now().toString().slice(-10),
-        birthDate: '2015-01-01',
-        grade: 1,
-        section: 'الف',
+      birthDate: '2015-01-01',
+      grade: 1,
+      section: 'الف',
         classId: 1,
         phone: '09123456789'
       };
@@ -129,12 +129,12 @@ class IntegrationTestSuite {
     
     // Test teacher creation
     await this.test('Create Teacher', async () => {
-      const teacherData = {
+    const teacherData = {
         employeeId: 'INT_TEST_' + Date.now(),
-        firstName: 'تست',
+      firstName: 'تست',
         lastName: 'یکپارچگی',
         nationalId: Date.now().toString().slice(-10),
-        phone: '09123456789',
+      phone: '09123456789',
         email: 'integration.test@school.ir'
       };
       
@@ -184,29 +184,29 @@ class IntegrationTestSuite {
     
     // Test attendance marking
     await this.test('Mark Individual Attendance', async () => {
-      const attendanceData = {
-        studentId: 1,
-        classId: 1,
+    const attendanceData = {
+      studentId: 1,
+      classId: 1,
         date: '2025-01-06',
-        status: 'PRESENT',
+      status: 'PRESENT',
         notes: 'Integration test'
-      };
-      
+    };
+    
       const result = await this.apiCall('POST', '/api/attendance/mark', attendanceData);
       if (!result.success) throw new Error('Attendance marking failed');
-    });
-    
+  });
+  
     // Test bulk attendance
     await this.test('Bulk Attendance Update', async () => {
-      const bulkData = {
-        updates: [
+    const bulkData = {
+      updates: [
           { studentId: 1, classId: 1, status: 'PRESENT' },
           { studentId: 2, classId: 1, status: 'PRESENT' }
-        ],
+      ],
         date: '2025-01-06',
-        classId: 1
-      };
-      
+      classId: 1
+    };
+    
       const result = await this.apiCall('POST', '/api/attendance/bulk', bulkData);
       if (!result.success) throw new Error('Bulk attendance update failed');
     });

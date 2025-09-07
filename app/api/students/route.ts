@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-import { validateStudentData } from '@/lib/validation/dataIntegrity'
+import { studentSchema } from '@/lib/validation/schemas'
 
 export async function GET(request: NextRequest) {
   try {
@@ -186,23 +186,21 @@ export async function POST(request: NextRequest) {
     // Generate studentId if not provided
     const finalStudentId = studentId || `${new Date().getFullYear().toString().slice(-2)}${grade.toString().padStart(2, '0')}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`
 
-    // Comprehensive data integrity validation
-    const validation = await validateStudentData({
-      firstName,
-      lastName,
-      nationalId,
-      studentId: finalStudentId,
-      phone,
-      classId
+    // Check for duplicate nationalId
+    const existingStudent = await db.student.findFirst({
+      where: {
+        OR: [
+          { nationalId },
+          { phone: phone || undefined }
+        ]
+      }
     })
 
-    if (!validation.isValid) {
+    if (existingStudent) {
       return NextResponse.json(
         { 
           success: false, 
-          errors: validation.errors,
-          warnings: validation.warnings,
-          message: 'اطلاعات تکراری یا نامعتبر'
+          error: 'دانش‌آموزی با این کد ملی یا شماره تلفن قبلاً ثبت شده است'
         },
         { status: 400 }
       )

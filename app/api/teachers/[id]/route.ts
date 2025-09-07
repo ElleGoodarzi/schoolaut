@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db as prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { updateTeacherSchema } from '@/lib/validation/schemas'
+import { AuthService } from '@/lib/auth/auth'
+import { AuditService, extractRequestInfo } from '@/lib/audit/auditService'
+import { z } from 'zod'
 
 // GET /api/teachers/[id] - Get individual teacher
 export async function GET(
@@ -7,8 +11,15 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    const user = await AuthService.getUserFromRequest(request)
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
     const teacherId = parseInt(params.id)
-    
     if (isNaN(teacherId)) {
       return NextResponse.json(
         { success: false, error: 'Invalid teacher ID' },
@@ -16,7 +27,7 @@ export async function GET(
       )
     }
 
-    const teacher = await prisma.teacher.findUnique({
+    const teacher = await db.teacher.findUnique({
       where: { id: teacherId },
       include: {
         classes: {
@@ -41,24 +52,7 @@ export async function GET(
 
     return NextResponse.json({
       success: true,
-      data: {
-        id: teacher.id,
-        employeeId: teacher.employeeId,
-        firstName: teacher.firstName,
-        lastName: teacher.lastName,
-        nationalId: teacher.nationalId,
-        phone: teacher.phone,
-        email: teacher.email,
-        hireDate: teacher.hireDate,
-        isActive: teacher.isActive,
-        classes: teacher.classes.map(cls => ({
-          id: cls.id,
-          grade: cls.grade,
-          section: cls.section,
-          capacity: cls.capacity,
-          studentCount: cls._count.students
-        }))
-      }
+      data: teacher
     })
 
   } catch (error) {
@@ -76,8 +70,23 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
+    const user = await AuthService.getUserFromRequest(request)
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
+    // Check permissions - Only ADMIN and VICE_PRINCIPAL can edit teachers
+    if (!['ADMIN', 'VICE_PRINCIPAL'].includes(user.role)) {
+      return NextResponse.json(
+        { success: false, error: 'Insufficient permissions' },
+        { status: 403 }
+      )
+    }
+
     const teacherId = parseInt(params.id)
-    
     if (isNaN(teacherId)) {
       return NextResponse.json(
         { success: false, error: 'Invalid teacher ID' },
@@ -85,52 +94,8 @@ export async function PUT(
       )
     }
 
-    const body = await request.json()
-    const {
-      firstName,
-      lastName,
-      nationalId,
-      phone,
-      email,
-      employeeId,
-      hireDate
-    } = body
-
-    // Validate required fields
-    const errors: Record<string, string> = {}
-
-    if (!firstName?.trim()) errors.firstName = 'نام الزامی است'
-    if (!lastName?.trim()) errors.lastName = 'نام خانوادگی الزامی است'
-    if (!nationalId?.trim()) errors.nationalId = 'کد ملی الزامی است'
-    if (!phone?.trim()) errors.phone = 'شماره تماس الزامی است'
-    if (!email?.trim()) errors.email = 'ایمیل الزامی است'
-
-    // Validate formats
-    if (nationalId && !/^\d{10}$/.test(nationalId)) {
-      errors.nationalId = 'کد ملی باید ۱۰ رقم باشد'
-    }
-
-    if (phone && !/^09\d{9}$/.test(phone)) {
-      errors.phone = 'شماره تماس معتبر نیست'
-    }
-
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.email = 'ایمیل معتبر نیست'
-    }
-
-    if (Object.keys(errors).length > 0) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          errors,
-          message: 'اطلاعات وارد شده صحیح نیست'
-        },
-        { status: 400 }
-      )
-    }
-
-    // Check if teacher exists
-    const existingTeacher = await prisma.teacher.findUnique({
+    // Get existing teacher for audit log
+    const existingTeacher = await db.teacher.findUnique({
       where: { id: teacherId }
     })
 
@@ -141,70 +106,55 @@ export async function PUT(
       )
     }
 
-    // Check for duplicates (excluding current teacher)
-    const duplicateChecks = await Promise.all([
-      prisma.teacher.findFirst({ 
-        where: { 
-          nationalId,
-          id: { not: teacherId }
-        } 
-      }),
-      prisma.teacher.findFirst({ 
-        where: { 
-          phone,
-          id: { not: teacherId }
-        } 
-      }),
-      prisma.teacher.findFirst({ 
-        where: { 
-          email,
-          id: { not: teacherId }
-        } 
-      }),
-      employeeId ? prisma.teacher.findFirst({ 
-        where: { 
-          employeeId,
-          id: { not: teacherId }
-        } 
-      }) : null
-    ])
+    const body = await request.json()
+    const validatedData = updateTeacherSchema.parse(body)
 
-    if (duplicateChecks[0]) {
-      errors.nationalId = 'معلم دیگری با این کد ملی وجود دارد'
-    }
-    if (duplicateChecks[1]) {
-      errors.phone = 'معلم دیگری با این شماره تماس وجود دارد'
-    }
-    if (duplicateChecks[2]) {
-      errors.email = 'معلم دیگری با این ایمیل وجود دارد'
-    }
-    if (duplicateChecks[3]) {
-      errors.employeeId = 'معلم دیگری با این کد کارمندی وجود دارد'
+    // Check for duplicate employee ID if it's being updated
+    if (validatedData.employeeId && validatedData.employeeId !== existingTeacher.employeeId) {
+      const existingEmployee = await db.teacher.findUnique({
+        where: { employeeId: validatedData.employeeId }
+      })
+
+      if (existingEmployee) {
+        return NextResponse.json(
+          { success: false, error: 'معلمی با این شماره پرسنلی قبلاً ثبت شده است' },
+          { status: 400 }
+        )
+      }
     }
 
-    if (Object.keys(errors).length > 0) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          errors,
-          message: 'اطلاعات تکراری'
-        },
-        { status: 400 }
-      )
+    // Check for duplicate national ID if it's being updated
+    if (validatedData.nationalId && validatedData.nationalId !== existingTeacher.nationalId) {
+      const existingNationalId = await db.teacher.findUnique({
+        where: { nationalId: validatedData.nationalId }
+      })
+
+      if (existingNationalId) {
+        return NextResponse.json(
+          { success: false, error: 'معلمی با این کد ملی قبلاً ثبت شده است' },
+          { status: 400 }
+        )
+      }
     }
 
-    // Update teacher
-    const updatedTeacher = await prisma.teacher.update({
+    // Check for duplicate phone if it's being updated
+    if (validatedData.phone && validatedData.phone !== existingTeacher.phone) {
+      const existingPhone = await db.teacher.findUnique({
+        where: { phone: validatedData.phone }
+      })
+
+      if (existingPhone) {
+        return NextResponse.json(
+          { success: false, error: 'معلمی با این شماره تلفن قبلاً ثبت شده است' },
+          { status: 400 }
+        )
+      }
+    }
+
+    // Update the teacher
+    const updatedTeacher = await db.teacher.update({
       where: { id: teacherId },
-      data: {
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        nationalId,
-        phone,
-        email,
-        employeeId: employeeId || existingTeacher.employeeId,
-        hireDate: hireDate ? new Date(hireDate) : existingTeacher.hireDate
-      },
+      data: validatedData,
       include: {
         classes: {
           where: { isActive: true },
@@ -219,43 +169,122 @@ export async function PUT(
       }
     })
 
-    console.log('✅ Teacher updated successfully:', {
-      id: updatedTeacher.id,
-      name: `${updatedTeacher.firstName} ${updatedTeacher.lastName}`,
-      employeeId: updatedTeacher.employeeId
-    })
+    // Audit log
+    const requestInfo = extractRequestInfo(request)
+    await AuditService.logUpdate(
+      'Teacher',
+      teacherId,
+      existingTeacher,
+      updatedTeacher,
+      user.id,
+      requestInfo.ipAddress,
+      requestInfo.userAgent
+    )
 
     return NextResponse.json({
       success: true,
-      data: {
-        id: updatedTeacher.id,
-        employeeId: updatedTeacher.employeeId,
-        firstName: updatedTeacher.firstName,
-        lastName: updatedTeacher.lastName,
-        nationalId: updatedTeacher.nationalId,
-        phone: updatedTeacher.phone,
-        email: updatedTeacher.email,
-        hireDate: updatedTeacher.hireDate,
-        isActive: updatedTeacher.isActive,
-        classes: updatedTeacher.classes.map(cls => ({
-          id: cls.id,
-          grade: cls.grade,
-          section: cls.section,
-          capacity: cls.capacity,
-          studentCount: cls._count.students
-        }))
-      },
-      message: 'اطلاعات معلم با موفقیت بروزرسانی شد'
+      data: updatedTeacher,
+      message: 'معلم با موفقیت به‌روزرسانی شد'
     })
 
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, error: error.errors[0].message },
+        { status: 400 }
+      )
+    }
+
     console.error('Error updating teacher:', error)
     return NextResponse.json(
-      { 
-        success: false, 
-        message: 'خطا در بروزرسانی معلم',
-        error: process.env.NODE_ENV === 'development' ? (error as Error).message : 'Internal server error'
-      },
+      { success: false, error: 'Failed to update teacher' },
+      { status: 500 }
+    )
+  }
+}
+
+// DELETE /api/teachers/[id] - Delete teacher
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const user = await AuthService.getUserFromRequest(request)
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
+    // Check permissions - Only ADMIN can delete teachers
+    if (user.role !== 'ADMIN') {
+      return NextResponse.json(
+        { success: false, error: 'Only administrators can delete teachers' },
+        { status: 403 }
+      )
+    }
+
+    const teacherId = parseInt(params.id)
+    if (isNaN(teacherId)) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid teacher ID' },
+        { status: 400 }
+      )
+    }
+
+    // Get existing teacher for audit log and check classes
+    const existingTeacher = await db.teacher.findUnique({
+      where: { id: teacherId },
+      include: {
+        _count: {
+          select: {
+            classes: true
+          }
+        }
+      }
+    })
+
+    if (!existingTeacher) {
+      return NextResponse.json(
+        { success: false, error: 'Teacher not found' },
+        { status: 404 }
+      )
+    }
+
+    // Check if teacher has active classes
+    if (existingTeacher._count.classes > 0) {
+      return NextResponse.json(
+        { success: false, error: 'نمی‌توان معلمی را که کلاس فعال دارد حذف کرد' },
+        { status: 400 }
+      )
+    }
+
+    // Delete the teacher
+    await db.teacher.delete({
+      where: { id: teacherId }
+    })
+
+    // Audit log
+    const requestInfo = extractRequestInfo(request)
+    await AuditService.logDelete(
+      'Teacher',
+      teacherId,
+      existingTeacher,
+      user.id,
+      requestInfo.ipAddress,
+      requestInfo.userAgent
+    )
+
+    return NextResponse.json({
+      success: true,
+      message: 'معلم با موفقیت حذف شد'
+    })
+
+  } catch (error) {
+    console.error('Error deleting teacher:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to delete teacher' },
       { status: 500 }
     )
   }

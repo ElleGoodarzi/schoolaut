@@ -26,6 +26,8 @@ model Student {
   attendances      Attendance[]
   payments         Payment[]
   classAssignments StudentClassAssignment[]
+  mealSubscriptions StudentMealSubscription[]
+  transportAssignments StudentTransportAssignment[]
   class            Class                    @relation(fields: [classId], references: [id], onDelete: Cascade)
 
   // Prevent duplicate students in same class
@@ -122,12 +124,73 @@ model Announcement {
 model MealService {
   id          Int      @id @default(autoincrement())
   date        DateTime
-  mealType    String
+  mealType    String   // BREAKFAST, LUNCH, SNACK
   menuItems   String
+  price       Float    @default(0)
   totalOrders Int      @default(0)
+  maxOrders   Int      @default(100)
   isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
 
   @@map("meal_services")
+}
+
+model TransportService {
+  id             Int      @id @default(autoincrement())
+  routeName      String
+  driverName     String
+  vehicleNumber  String
+  capacity       Int      @default(20)
+  pickupTime     String
+  dropoffTime    String
+  pickupPoints   String   // JSON array of pickup locations
+  monthlyFee     Float
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt @default(now())
+  
+  // Relations
+  assignments    StudentTransportAssignment[]
+
+  @@unique([routeName])
+  @@map("transport_services")
+}
+
+model StudentMealSubscription {
+  id          Int         @id @default(autoincrement())
+  studentId   Int
+  mealType    String      // BREAKFAST, LUNCH, SNACK, ALL
+  startDate   DateTime
+  endDate     DateTime?
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt @default(now())
+  
+  // Relations
+  student     Student     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  @@unique([studentId, mealType])
+  @@map("student_meal_subscriptions")
+}
+
+model StudentTransportAssignment {
+  id               Int              @id @default(autoincrement())
+  studentId        Int
+  transportId      Int
+  startDate        DateTime
+  endDate          DateTime?
+  pickupPoint      String
+  isActive         Boolean          @default(true)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt @default(now())
+  
+  // Relations
+  student          Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  transport        TransportService @relation(fields: [transportId], references: [id], onDelete: Cascade)
+  
+  @@unique([studentId, transportId])
+  @@map("student_transport_assignments")
 }
 
 model StudentClassAssignment {
@@ -145,4 +208,41 @@ model StudentClassAssignment {
 
   @@unique([studentId, classId, startDate])
   @@map("student_class_assignments")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  role         String   @default("TEACHER") // ADMIN, VICE_PRINCIPAL, TEACHER, FINANCE
+  firstName    String?
+  lastName     String?
+  email        String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  lastLoginAt  DateTime?
+  
+  // Relations
+  auditLogs    AuditLog[]
+  
+  @@map("users")
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  action    String   // CREATE, UPDATE, DELETE, LOGIN, LOGOUT
+  model     String   // Student, Teacher, Class, etc.
+  recordId  Int?
+  oldValues String?  // JSON string of old values
+  newValues String?  // JSON string of new values
+  userId    Int
+  timestamp DateTime @default(now())
+  ipAddress String?
+  userAgent String?
+  
+  // Relations
+  user      User     @relation(fields: [userId], references: [id])
+  
+  @@map("audit_logs")
 }
