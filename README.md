@@ -1,152 +1,97 @@
-# سیستم اتوماسیون مدرسه دبستان مهرآیین
+# School Management System
 
-یک سیستم اتوماسیون مدرسه مدرن و کامل برای مدارس ایرانی با پشتیبانی کامل از زبان فارسی، چینش راست‌چین و پایگاه داده PostgreSQL.
+A comprehensive school automation system built with Next.js 14, TypeScript, and Prisma. Designed for Persian language schools with full RTL support and modern web technologies.
 
-## ویژگی‌های اصلی
+## Features
 
-### 🏠 داشبورد مدیریت (متصل به پایگاه داده)
-- ✅ آمار زنده دانش‌آموزان و کلاس‌ها
-- ✅ وضعیت حضور و غیاب روزانه از پایگاه داده
-- ✅ پیگیری خودکار شهریه‌های معوقه
-- ✅ آخرین اطلاعیه‌ها از جداول پایگاه داده
-- ✅ هشدارهای هوشمند (غیبت مکرر، پرداخت معوقه)
-- ✅ دکمه‌های دسترسی سریع با مسیریابی
+- **Student Management** - Complete student information and enrollment tracking
+- **Attendance System** - Real-time attendance marking and monitoring
+- **Financial Management** - Payment tracking and overdue notifications
+- **Teacher Administration** - Class assignments and teacher management
+- **Analytics Dashboard** - Real-time statistics and reporting
+- **Communication Tools** - Announcements and parent notifications
 
-### 📊 پنل مدیریت
-- مدیریت سال تحصیلی
-- تعریف پایه‌ها و کلاس‌ها
-- تقویم شمسی مدرسه
-- مدیریت نقش‌ها و دسترسی‌ها
+## Technology Stack
 
-### 🗄️ پایگاه داده PostgreSQL
-- ✅ طراحی کامل جداول (دانش‌آموزان، معلمان، کلاس‌ها، حضور و غیاب، پرداخت‌ها)
-- ✅ API Routes برای تمام عملیات CRUD
-- ✅ سیستم هشدار خودکار
-- ✅ داده‌های نمونه (Seeding) برای تست
+- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: SQLite (configurable to PostgreSQL)
+- **UI**: Responsive design with RTL support for Persian
 
-### 🎯 بخش‌های در حال توسعه
-- مدیریت مالی
-- سرویس و غذا
-- حضور و غیاب
-- ارزیابی معلمان
-- مدیریت جوایز
-- ارتباطات اولیا
-- بخش‌نامه‌ها
-- نظرسنجی‌ها
-- مدیریت دانش‌آموزان
-- مدیریت معلمان
-- تنظیمات سیستم
+## Quick Start
 
-## تکنولوژی‌های استفاده شده
+### Prerequisites
+- Node.js 18+
+- npm or yarn
 
-### Frontend
-- **Next.js 14** - فریمورک React با App Router
-- **TypeScript** - توسعه ایمن
-- **Tailwind CSS** - طراحی واکنش‌گرا
-- **Heroicons** - آیکون‌های زیبا
-- **فونت‌های فارسی** - وزیر و ایران‌سنس
+### Installation
 
-### Backend & Database
-- **SQLite** - پایگاه داده محلی (قابل تغییر به PostgreSQL)
-- **Prisma ORM** - مدیریت پایگاه داده
-- **Next.js API Routes** - رابط برنامه‌نویسی
-- **TypeScript** - تایپ‌سیفتی کامل
-
-## ویژگی‌های طراحی
-
-✅ **RTL کامل** - پشتیبانی کامل از راست‌چین  
-✅ **فونت فارسی** - استفاده از فونت‌های وزیر و ایران‌سنس  
-✅ **واکنش‌گرا** - سازگار با موبایل و تبلت  
-✅ **طراحی مدرن** - رابط کاربری زیبا و کاربردی  
-✅ **انیمیشن‌ها** - تجربه کاربری روان  
-
-## نصب و راه‌اندازی
-
-### پیش‌نیازها
-- Node.js 18+ 
-- npm یا yarn
-
-### مراحل نصب
-
-1. **کلون کردن پروژه**
-\`\`\`bash
+```bash
+# Clone repository
 git clone <repository-url>
 cd schoolaut
-\`\`\`
 
-2. **نصب وابستگی‌ها**
-\`\`\`bash
+# Install dependencies
 npm install
-\`\`\`
 
-3. **راه‌اندازی پایگاه داده**
-\`\`\`bash
-# فایل .env.local از قبل تنظیم شده است (SQLite)
-# برای استفاده از PostgreSQL، راهنمای DATABASE_SETUP.md را ببینید
-
-# تولید کلاینت Prisma
+# Setup database
 npm run db:generate
-
-# ایجاد جداول
 npm run db:push
-
-# پر کردن پایگاه داده با داده‌های نمونه
 npm run db:seed
-\`\`\`
 
-4. **اجرای محیط توسعه**
-\`\`\`bash
+# Start development server
 npm run dev
-\`\`\`
+```
 
-5. **مشاهده در مرورگر**
-برو به \`http://localhost:3000\`
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-📋 **راهنمای کامل راه‌اندازی پایگاه داده در فایل `DATABASE_SETUP.md`**
+## Project Structure
 
-## ساختار پروژه
-
-\`\`\`
+```
 schoolaut/
-├── app/                    # صفحات Next.js 14
-│   ├── page.tsx           # داشبورد اصلی
-│   ├── management/        # پنل مدیریت
-│   ├── financial/         # مدیریت مالی
-│   └── ...               # سایر بخش‌ها
-├── components/            # کامپوننت‌های قابل استفاده مجدد
-│   ├── Sidebar.tsx       # منوی کناری
-│   ├── MainLayout.tsx    # لایوت اصلی
-│   ├── StatCard.tsx      # کارت آمار
-│   └── ...
-├── globals.css           # استایل‌های سراسری و فونت‌ها
-└── tailwind.config.js    # تنظیمات Tailwind
-\`\`\`
+├── app/                    # Next.js pages and API routes
+├── components/             # Reusable UI components
+├── lib/                   # Utilities and database configuration
+├── prisma/               # Database schema and migrations
+└── public/               # Static assets
+```
 
-## دستورات مفید
+## Available Scripts
 
-### توسعه
-- \`npm run dev\` - اجرای محیط توسعه
-- \`npm run build\` - ساخت نسخه نهایی
-- \`npm run start\` - اجرای نسخه نهایی
-- \`npm run lint\` - بررسی کیفیت کد
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run db:generate` - Generate Prisma client
+- `npm run db:push` - Push schema to database
+- `npm run db:seed` - Seed with sample data
 
-### پایگاه داده
-- \`npm run db:generate\` - تولید کلاینت Prisma
-- \`npm run db:push\` - اعمال تغییرات schema به پایگاه داده
-- \`npm run db:seed\` - پر کردن پایگاه داده با داده‌های نمونه
+## Database Schema
 
-## مشارکت در پروژه
+The system includes comprehensive models for:
+- Students and class assignments
+- Teachers and class management
+- Attendance tracking with status and notes
+- Payment records and financial tracking
+- Announcements and communications
 
-1. فورک کردن پروژه
-2. ساخت شاخه جدید (\`git checkout -b feature/amazing-feature\`)
-3. کامیت تغییرات (\`git commit -m 'Add some amazing feature'\`)
-4. پوش به شاخه (\`git push origin feature/amazing-feature\`)
-5. ایجاد Pull Request
+## API Endpoints
 
-## مجوز
+RESTful API endpoints are available for all major operations:
+- `/api/students` - Student management
+- `/api/attendance` - Attendance operations
+- `/api/classes` - Class and teacher management
+- `/api/financial` - Payment and financial data
 
-این پروژه تحت مجوز MIT منتشر شده است.
+## Development
 
----
+The application uses modern development practices:
+- TypeScript for type safety
+- Prisma for database operations
+- Tailwind CSS for styling
+- Component-based architecture
+- RESTful API design
 
-**ساخته شده با ❤️ برای مدارس ایران**
+## License
+
+MIT License
