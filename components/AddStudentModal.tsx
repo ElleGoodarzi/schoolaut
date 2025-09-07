@@ -37,6 +37,8 @@ interface ClassOption {
   teacherName: string
   capacity: number
   currentStudents: number
+  availableSpots: number
+  isFull?: boolean
 }
 
 export default function AddStudentModal({ isOpen, onClose, onSuccess }: AddStudentModalProps) {
@@ -68,19 +70,49 @@ export default function AddStudentModal({ isOpen, onClose, onSuccess }: AddStude
   const fetchAvailableClasses = async (grade: number) => {
     try {
       setLoadingClasses(true)
-      const response = await fetch(`/api/classes/available?grade=${grade}`)
-      if (response.ok) {
-        const result = await response.json()
-        const classes = result.success ? result.data : []
-        setAvailableClasses(Array.isArray(classes) ? classes : [])
-        
-        // Auto-select first available class
-        if (Array.isArray(classes) && classes.length > 0) {
-          setFormData(prev => ({ ...prev, classId: classes[0].id, section: classes[0].section }))
+      
+      // First try to get available classes
+      const availableResponse = await fetch(`/api/classes/available?grade=${grade}`)
+      let classes = []
+      
+      if (availableResponse.ok) {
+        const availableResult = await availableResponse.json()
+        classes = availableResult.success ? availableResult.data : []
+      }
+      
+      // If no available classes, get all classes for this grade
+      if (classes.length === 0) {
+        const allClassesResponse = await fetch('/api/management/classes')
+        if (allClassesResponse.ok) {
+          const allResult = await allClassesResponse.json()
+          if (allResult.success) {
+            const gradeClasses = allResult.data.classes
+              .filter((cls: any) => cls.grade === grade)
+              .map((cls: any) => ({
+                id: cls.id,
+                grade: cls.grade,
+                section: cls.section,
+                teacherName: `${cls.teacher.firstName} ${cls.teacher.lastName}`,
+                capacity: cls.capacity,
+                currentStudents: cls._count.students,
+                availableSpots: Math.max(0, cls.capacity - cls._count.students),
+                isFull: cls._count.students >= cls.capacity
+              }))
+            classes = gradeClasses
+          }
         }
-      } else {
-        // Handle error case
-        setAvailableClasses([])
+      }
+      
+      setAvailableClasses(Array.isArray(classes) ? classes : [])
+      
+      // Auto-select first class (available or with spots)
+      if (Array.isArray(classes) && classes.length > 0) {
+        const firstAvailable = classes.find(c => !c.isFull) || classes[0]
+        setFormData(prev => ({ 
+          ...prev, 
+          classId: firstAvailable.id, 
+          section: firstAvailable.section 
+        }))
       }
     } catch (error) {
       console.error('Error fetching classes:', error)
@@ -423,14 +455,32 @@ export default function AddStudentModal({ isOpen, onClose, onSuccess }: AddStude
                   >
                     <option value="">{loadingClasses ? 'در حال بارگذاری...' : 'انتخاب کلاس'}</option>
                     {Array.isArray(availableClasses) && availableClasses.map(cls => (
-                      <option key={cls.id} value={cls.id}>
-                        {englishToPersianNumbers(cls.grade)}{cls.section} - {cls.teacherName} 
+                      <option key={cls.id} value={cls.id} disabled={cls.isFull}>
+                        پایه {englishToPersianNumbers(cls.grade)}{cls.section} - {cls.teacherName} 
                         ({englishToPersianNumbers(cls.currentStudents)}/{englishToPersianNumbers(cls.capacity)})
+                        {cls.isFull ? ' - ظرفیت تکمیل' : cls.availableSpots ? ` - ${englishToPersianNumbers(cls.availableSpots)} جا خالی` : ''}
                       </option>
                     ))}
+                    {availableClasses.length === 0 && !loadingClasses && (
+                      <option value="" disabled>
+                        کلاسی برای این پایه موجود نیست
+                      </option>
+                    )}
                   </select>
                   {errors.classId && (
                     <p className="text-red-600 text-xs mt-1">{errors.classId}</p>
+                  )}
+                  
+                  {availableClasses.length === 0 && !loadingClasses && formData.grade > 4 && (
+                    <p className="text-amber-600 text-xs mt-1">
+                      ⚠️ کلاسی برای پایه {englishToPersianNumbers(formData.grade)} تعریف نشده است. لطفاً پایه دیگری انتخاب کنید.
+                    </p>
+                  )}
+                  
+                  {availableClasses.length > 0 && availableClasses.every(c => c.isFull) && (
+                    <p className="text-amber-600 text-xs mt-1">
+                      ⚠️ تمام کلاس‌های پایه {englishToPersianNumbers(formData.grade)} پر هستند. با مدیریت مدرسه تماس بگیرید.
+                    </p>
                   )}
                 </div>
               </div>
